@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cesium Test</title>
+        <!-- Include the CesiumJS JavaScript and CSS files -->
+        <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
+        <link href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+        <!-- <script src="./main.js"></script> -->
+    </head>
+    <style>
+
+        #cesiumContainer{
+            height:100vh;
+            width:70vw;
+            padding:0px;
+            margin:0px;
+            overflow:hidden;
+        }
+    </style>
+    <body>
+        <div id="cesiumContainer"></div>
+        <script>
+            // Set Cesium Ion access token
+            Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWE3ZmFhOS01M2MzLTRiMWUtODI0ZS05YmJjZjI0ZGYzZDEiLCJpZCI6MjQxNTkyLCJpYXQiOjE3MjYzMDg1Nzl9.p3LFJJ7_1ZYfrf7MgCswSWiJONwnxhBjiO8TymV4NOs';
+
+            // Create the Cesium viewer with terrain
+            const viewer = new Cesium.Viewer("cesiumContainer", {
+                terrain: Cesium.Terrain.fromWorldTerrain(),
+            });
+
+            // Load the 3D Tileset from Cesium Ion
+            (async function() {
+                try {
+                    const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(2748393);
+                    viewer.scene.primitives.add(tileset);
+                    viewer.zoomTo(tileset);
+                } catch (error) {
+                    console.error(`Error loading tileset: ${error}`);
+                }
+            })();
+
+        </script>
+    </body>
+</html>
