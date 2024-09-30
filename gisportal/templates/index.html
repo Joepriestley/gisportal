@@ -4,43 +4,68 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cesium Test</title>
-        <!-- Include the CesiumJS JavaScript and CSS files -->
+        <!-- Include CesiumJS JavaScript and CSS -->
         <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
         <link href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-        <!-- <script src="./main.js"></script> -->
     </head>
     <style>
-
-        #cesiumContainer{
-            height:100vh;
-            width:70vw;
-            padding:0px;
-            margin:0px;
-            overflow:hidden;
+        #cesiumContainer {
+            height: 100vh;
+            width: 70vw;
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+        }
+        #toggleData {
+            position: relative;
+            top: 15%;
+            right: 25px;
+            z-index: 1000;
         }
     </style>
     <body>
-        <div id="cesiumContainer"></div>
+        <div id="cesiumContainer">
+            <div id="toggleData">
+                <select id="modelSelect">
+                    <option value="2752122">Nuage de Points</option>
+                    <option value="2275207">GooglePhotorealistic</option>
+                    <option value="69380">Melbourne</option>
+                </select>
+            </div>
+        </div>
+        
         <script>
             // Set Cesium Ion access token
             Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWE3ZmFhOS01M2MzLTRiMWUtODI0ZS05YmJjZjI0ZGYzZDEiLCJpZCI6MjQxNTkyLCJpYXQiOjE3MjYzMDg1Nzl9.p3LFJJ7_1ZYfrf7MgCswSWiJONwnxhBjiO8TymV4NOs';
 
             // Create the Cesium viewer with terrain
             const viewer = new Cesium.Viewer("cesiumContainer", {
-                terrain: Cesium.Terrain.fromWorldTerrain(),
+                terrainProvider: Cesium.createWorldTerrain(),
             });
 
-            // Load the 3D Tileset from Cesium Ion
-            (async function() {
+            // Function to load a tileset by asset ID
+            let currentTileset;
+            async function loadTileset(assetId) {
+                if (currentTileset) {
+                    viewer.scene.primitives.remove(currentTileset);
+                }
                 try {
-                    const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(2748393);
-                    viewer.scene.primitives.add(tileset);
-                    viewer.zoomTo(tileset);
+                    currentTileset = await Cesium.Cesium3DTileset.fromIonAssetId(assetId);
+                    viewer.scene.primitives.add(currentTileset);
+                    viewer.zoomTo(currentTileset);
                 } catch (error) {
                     console.error(`Error loading tileset: ${error}`);
                 }
-            })();
+            }
 
+            // Load the initial model
+            loadTileset(2747865);  // Default model
+
+            // Event listener for model switching
+            document.getElementById('modelSelect').addEventListener('change', function () {
+                const assetId = parseInt(this.value);
+                loadTileset(assetId);
+            });
         </script>
     </body>
 </html>

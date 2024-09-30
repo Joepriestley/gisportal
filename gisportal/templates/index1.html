@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cesium Test</title>
+        <!-- Include the CesiumJS JavaScript and CSS files -->
+        <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
+        <link href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+        <!-- <script src="./main.js"></script> -->
+    </head>
+    <style>
+
+        #cesiumContainer{
+            height:100vh;
+            width:70vw;
+            padding:0px;
+            margin:0px;
+            overflow:hidden;
+        }
+        #toggleData{
+            position:relative;
+            top:15%;
+            size:12px
+            right:25px;
+            height:30px;
+            z-index:1000;
+            color:#222;
+        }
+    </style>
+    <body>
+        <div id="cesiumContainer">
+    <button id="toggleData">
+            
+    <select name="foods" id="hr-select">
+    <option value="">Choose a food</option>
+    <hr/>
+    <optgroup label="Fruit">
+      <option value="apple">Apples</option>
+      <option value="banana">Bananas</option>
+      <option value="cherry">Cherries</option>
+      <option value="damson">Damsons</option>
+    </optgroup>
+    <hr />
+    <optgroup label="Vegetables">
+      <option value="artichoke">Artichokes</option>
+      <option value="broccoli">Broccoli</option>
+      <option value="cabbage">Cabbages</option>
+    </optgroup>
+    <hr />
+    <optgroup label="Meat">
+      <option value="beef">Beef</option>
+      <option value="chicken">Chicken</option>
+      <option value="pork">Pork</option>
+    
+  </select>
+          
+        </div>
+        <script>
+            // Set Cesium Ion access token
+            Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWE3ZmFhOS01M2MzLTRiMWUtODI0ZS05YmJjZjI0ZGYzZDEiLCJpZCI6MjQxNTkyLCJpYXQiOjE3MjYzMDg1Nzl9.p3LFJJ7_1ZYfrf7MgCswSWiJONwnxhBjiO8TymV4NOs';
+
+            // Create the Cesium viewer with terrain
+            const viewer = new Cesium.Viewer("cesiumContainer", {
+                terrain: Cesium.Terrain.fromWorldTerrain(),
+            });
+
+         
+            // Load the 3D Tileset from Cesium Ion
+            (async function() {
+                try {
+                    const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(2747865);
+                    viewer.scene.primitives.add(tileset);
+                    viewer.zoomTo(tileset);
+                } catch (error) {
+                    console.error(`Error loading tileset: ${error}`);
+                }
+            })();
+
+        </script>
+    </body>
+</html>
