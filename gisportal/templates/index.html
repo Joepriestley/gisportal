@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cesium Test</title>
+        <title>Cesium Mouse Position Toggle</title>
         <!-- Include CesiumJS JavaScript and CSS -->
         <script src="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Cesium.js"></script>
         <link href="https://cesium.com/downloads/cesiumjs/releases/1.104/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
@@ -11,60 +11,103 @@
     <style>
         #cesiumContainer {
             height: 100vh;
-            width: 70vw;
-            padding: 0px;
-            margin: 0px;
+            width: 56vw;
+            padding: 0;
+            margin: 0;
             overflow: hidden;
         }
-        #toggleData {
-            position: relative;
-            top: 15%;
-            right: 25px;
+
+        #cartographicLabel {
+            position: absolute;
+            background-color: rgba(42, 42, 42, 0.8);
+            color: white;
+            padding: 8px;
+            font-family: monospace;
             z-index: 1000;
+            pointer-events: none; /* Prevent interfering with mouse events */
+            display: none; /* Hidden by default */
+        }
+
+        #toggleButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 15px;
+            background-color: rgba(42, 42, 42, 0.8);
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #toggleButton:hover {
+            cursor: pointer;
+        }
+
+        #toggleButton.active {
+            background-color: green;
         }
     </style>
     <body>
-        <div id="cesiumContainer">
-            <div id="toggleData">
-                <select id="modelSelect">
-                    <option value="2752122">Nuage de Points</option>
-                    <option value="2275207">GooglePhotorealistic</option>
-                    <option value="69380">Melbourne</option>
-                </select>
-            </div>
-        </div>
-        
+        <div id="cesiumContainer"></div>
+        <div id="cartographicLabel">Lat: -<br>Lon: -<br>Alt: -</div>
+        <button id="toggleButton">Activate Mouse Position</button>
+
         <script>
-            // Set Cesium Ion access token
+            // Set Cesium Ion access token (Insert your Cesium Ion token here)
             Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWE3ZmFhOS01M2MzLTRiMWUtODI0ZS05YmJjZjI0ZGYzZDEiLCJpZCI6MjQxNTkyLCJpYXQiOjE3MjYzMDg1Nzl9.p3LFJJ7_1ZYfrf7MgCswSWiJONwnxhBjiO8TymV4NOs';
 
-            // Create the Cesium viewer with terrain
-            const viewer = new Cesium.Viewer("cesiumContainer", {
-                terrainProvider: Cesium.createWorldTerrain(),
+            // Create the Cesium viewer
+            const viewer = new Cesium.Viewer('cesiumContainer', {
+                terrainProvider: Cesium.createWorldTerrain()
             });
 
-            // Function to load a tileset by asset ID
-            let currentTileset;
-            async function loadTileset(assetId) {
-                if (currentTileset) {
-                    viewer.scene.primitives.remove(currentTileset);
-                }
-                try {
-                    currentTileset = await Cesium.Cesium3DTileset.fromIonAssetId(assetId);
-                    viewer.scene.primitives.add(currentTileset);
-                    viewer.zoomTo(currentTileset);
-                } catch (error) {
-                    console.error(`Error loading tileset: ${error}`);
-                }
-            }
+            // Get the cartographic label div and the toggle button
+            const cartographicLabel = document.getElementById('cartographicLabel');
+            const toggleButton = document.getElementById('toggleButton');
+            let isMouseTrackingActive = false;  // To track if the mouse position display is active
 
-            // Load the initial model
-            loadTileset(2747865);  // Default model
+            // Create the screen space event handler
+            const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
-            // Event listener for model switching
-            document.getElementById('modelSelect').addEventListener('change', function () {
-                const assetId = parseInt(this.value);
-                loadTileset(assetId);
+            // Function to update the label with cartographic coordinates
+            handler.setInputAction(function (movement) {
+                if (isMouseTrackingActive) {  // Only show mouse position if tracking is active
+                    const cartesian = viewer.camera.pickEllipsoid(movement.endPosition, viewer.scene.globe.ellipsoid);
+
+                    if (cartesian) {
+                        const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                        const longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(4);
+                        const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(4);
+                        const altitude = cartographic.height.toFixed(2);
+
+                        // Update the label with coordinates
+                        cartographicLabel.innerHTML = `Lat: ${latitude}°<br>Lon: ${longitude}°<br>Alt: ${altitude} m`;
+
+                        // Show the label and position it near the mouse pointer
+                        cartographicLabel.style.display = 'block';
+                        cartographicLabel.style.left = movement.endPosition.x + 15 + 'px';
+                        cartographicLabel.style.top = movement.endPosition.y + 15 + 'px';
+                    } else {
+                        // If no position is found, hide the label
+                        cartographicLabel.style.display = 'none';
+                    }
+                }
+            }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+            // Toggle button click event listener
+            toggleButton.addEventListener('click', function () {
+                isMouseTrackingActive = !isMouseTrackingActive;  // Toggle the state
+
+                if (isMouseTrackingActive) {
+                    toggleButton.textContent = "Deactivate Mouse Position";
+                    toggleButton.classList.add('active');
+                } else {
+                    toggleButton.textContent = "Activate Mouse Position";
+                    toggleButton.classList.remove('active');
+                    cartographicLabel.style.display = 'none';  // Hide the label if deactivated
+                }
             });
         </script>
     </body>
