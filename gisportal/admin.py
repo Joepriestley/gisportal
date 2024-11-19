@@ -2,6 +2,9 @@ from django.contrib import admin # type: ignore
 from .models import(DRANEF,DPANEF,ZDTF,Region,Province,Commune,Forest,Canton,Groupe,Parcelle,Species,ParcelSpecies )
 
 # Register your models here.
+
+admin.site.site_header = "Globeportal"
+ 
 admin.site.register(DRANEF)
 admin.site.register(DPANEF)
 admin.site.register(ZDTF)
