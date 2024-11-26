@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Welcome to Globetudes
+{% endblock %}
+
+{% block extra_head %}
+    <!-- Add any page-specific CSS here, if necessary -->
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero mb-3">
+        <video autoplay muted loop class="bg-video">
+            <source src="{% static 'videos/bg1.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="container">
+            <div class="hero-text text-center">
+                <h1>Welcome to GlobeForGIS</h1>
+                <p>Your gateway to global forestry analysis and insights.</p>
+                <a href="#" class="btn btn-primary mt-3">Learn More</a>
+            </div>
+        </div>
+    </section>
+<d></d>
+    <!-- Latest News Section -->
+    <section  class="news py-5 mt-3">
+        <div class="container">
+            <h2 class="text-center mb-4">Recent Operations</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4" data-aos="fade-right">
+                    <div class="card">
+                        <img class="card-img-top" src="{% static 'img/news1.jpg' %}" alt="Conference News">
+                        <div class="card-body">
+                            <h5 class="card-title">Upcoming Conference on Forestry Technology</h5>
+                            <p class="card-text">Join industry leaders to explore the latest in forest technology and data analysis.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4" data-aos="fade-left">
+                    <div class="card">
+                        <img class="card-img-top" src="{% static 'img/news2.jpg' %}" alt="New Tool News">
+                        <div class="card-body">
+                            <h5 class="card-title">New Tool for Forest Data Management</h5>
+                            <p class="card-text">We're excited to launch our new tool for managing forest data more efficiently.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5 text-dark">Key Features</h2>
+            <div class="row text-center text-dark">
+                <div class="col-md-4" data-aos="fade-up">
+                    <i class="ri-earth-fill icon mb-3"></i>
+                    <h3>Global Coverage</h3>
+                    <p>Access forestry data from all corners of the world, with interactive 3D and 2D visualizations.</p>
+                </div>
+
+                <div class="col-md-4 text-dark" data-aos="fade-up" data-aos-delay="200">
+                    <i class="ri-map-pin-fill icon mb-3"></i>
+                    <h3>Precise Mapping</h3>
+                    <p>Advanced tools for precise analysis of terrain, vegetation, and natural resources.</p>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <i class="ri-pie-chart-fill icon mb-3"></i>
+                    <h3>Data Insights</h3>
+                    <p>Turn raw forestry data into actionable insights for better decision-making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta py-5 text-dark">
+        <div class="container text-center">
+            <h2>Join Our Community</h2>
+            <p>Become a member today and get exclusive access to premium features.</p>
+            <a href="#" class="btn btn-success mt-3">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Services at Globetudes</h2>
+            <div class="row text-center">
+                <div class="col-md-4" data-aos="fade-up">
+                    <i class="ri-earth-fill icon mb-3"></i>
+                    <h3>Global Coverage</h3>
+                    <p>Access forestry data from all corners of the world, with interactive 3D and 2D visualizations.</p>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <i class="ri-map-pin-fill icon mb-3"></i>
+                    <h3>Precise Mapping</h3>
+                    <p>Advanced tools for precise analysis of terrain, vegetation, and natural resources.</p>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                    <i class="ri-pie-chart-fill icon mb-3"></i>
+                    <h3>Data Insights</h3>
+                    <p>Turn raw forestry data into actionable insights for better decision-making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_scripts %}
+    <!-- Page-specific JavaScript or libraries can be added here -->
+    <!-- AOS (Animate on Scroll) -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            offset: 100,
+            duration: 1000,
+            easing: 'ease',
+            once: true,
+            anchorPlacement: 'top-bottom',
+        });
+    </script>
+{% endblock %}

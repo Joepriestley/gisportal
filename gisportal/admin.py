@@ -1,19 +1,173 @@
-from django.contrib import admin # type: ignore
-from .models import(DRANEF,DPANEF,ZDTF,Region,Province,Commune,Forest,Canton,Groupe,Parcelle,Species,ParcelSpecies )
+from django.contrib import admin
+from django.urls import path
+from django.shortcuts import render
+from gisportal.models import (
+    DRANEF, DPANEF, DFP, ZDTF, Region, Province, Commune, 
+    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies
+)
 
-# Register your models here.
+# Custom Admin Site
+class CustomAdminSite(admin.AdminSite):
+    site_header = "Geoportal Globetudes Admin"
+    site_title = "Geoportal Admin"
 
-admin.site.site_header = "Globeportal"
- 
-admin.site.register(DRANEF)
-admin.site.register(DPANEF)
-admin.site.register(ZDTF)
-admin.site.register(Region)
-admin.site.register(Province)
-admin.site.register(Commune)
-admin.site.register(Forest)
-admin.site.register(Canton)
-admin.site.register(Groupe)
-admin.site.register(Parcelle)
-admin.site.register(Species)
-admin.site.register(ParcelSpecies)
+    def get_urls(self):
+        # Add custom URLs for the admin dashboard
+        urls = super().get_urls()
+        custom_urls = [
+            path('dashboard/', self.admin_view(self.dashboard_view)),
+        ]
+        return custom_urls + urls
+
+    def dashboard_view(self, request):
+        # Render a custom dashboard page
+        stats = {
+            'forests': Forest.objects.count(),
+            'parcels': Parcelle.objects.count(),
+            'species': Species.objects.count(),
+        }
+        return render(request, 'admin/dashboard.html', {'stats': stats})
+
+
+# Instantiate the Custom Admin Site
+admin_site = CustomAdminSite(name='custom_admin')
+
+# Register models with the custom admin site
+admin_site.register(Forest)
+admin_site.register(Parcelle)
+admin_site.register(Species)
+
+
+# DRANEF Admin
+@admin.register(DRANEF)
+class DRANEFAdmin(admin.ModelAdmin):
+    list_display = ('id_dranef', 'name')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+# DPANEF Admin
+@admin.register(DPANEF)
+class DPANEFAdmin(admin.ModelAdmin):
+    list_display = ('id_dpanef', 'name')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+# DFP Admin
+@admin.register(DFP)
+class DFPAdmin(admin.ModelAdmin):
+    list_display = ('id_dfp', 'name')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+# ZDTF Admin
+@admin.register(ZDTF)
+class ZDTFAdmin(admin.ModelAdmin):
+    list_display = ('id_zdtf', 'name')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+# Region Admin
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ('id_region', 'name')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+# Province Admin
+@admin.register(Province)
+class ProvinceAdmin(admin.ModelAdmin):
+    list_display = ('id_province', 'name')
+    search_fields = ('name',)
+
+
+# Commune Admin
+@admin.register(Commune)
+class CommuneAdmin(admin.ModelAdmin):
+    list_display = ('id_commune', 'name')
+    search_fields = ('name',)
+
+
+# Inline Admin for Canton
+class CantonInline(admin.TabularInline):
+    model = Canton
+    extra = 1
+    max_num = 10
+
+
+# Forest Admin
+@admin.register(Forest)
+class ForestAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_forest', 'forest_name', 'location_name', 
+        'surface_area', 'num_canton', 'number_parcel', 
+        'titre_foncier', 'forest_formation'
+    )
+    search_fields = ('forest_name', 'location_name')
+    list_filter = ('id_forest', 'forest_name')
+    inlines = [CantonInline]
+
+
+# Inline Admin for Groupe
+class GroupeInline(admin.TabularInline):
+    model = Groupe
+    extra = 1
+
+
+# Canton Admin
+@admin.register(Canton)
+class CantonAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_canton', 'canton_name', 'num_groupe', 
+        'surface_area', 'forest'
+    )
+    search_fields = ('canton_name',)
+    list_filter = ('id_canton', 'canton_name')
+    inlines = [GroupeInline]
+
+
+# Groupe Admin
+@admin.register(Groupe)
+class GroupeAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_groupe', 'groupe_name', 'surface_area', 
+        'parcel_number', 'forest', 'canton'
+    )
+    search_fields = ('groupe_name',)
+    list_filter = ('id_groupe', 'groupe_name')
+    raw_id_fields = ('forest', 'canton')
+
+
+# Parcelle Admin
+@admin.register(Parcelle)
+class ParcelleAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_parcelle', 'parcelle_name', 'surface_area', 
+        'location', 'groupe', 'commune', 'dfp'
+    )
+    search_fields = ('parcelle_name',)
+    list_filter = ('id_parcelle', 'parcelle_name')
+
+
+# Species Admin
+@admin.register(Species)
+class SpeciesAdmin(admin.ModelAdmin):
+    list_display = (
+        'id_species', 'scientific_name', 'vernacular_name', 
+        'french_name', 'species_importance'
+    )
+    search_fields = ('scientific_name',)
+    list_filter = ('scientific_name',)
+
+
+# ParcelSpecies Admin
+@admin.register(ParcelSpecies)
+class ParcelSpeciesAdmin(admin.ModelAdmin):
+    list_display = ('scientific_name', 'num_species', 'parcelle')
+    search_fields = ('parcelle', 'scientific_name')
+    list_filter = ('scientific_name',)
+    autocomplete_fields = ['scientific_name']

@@ -9,7 +9,7 @@ class DRANEF(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class DPANEF(models.Model):
@@ -18,7 +18,7 @@ class DPANEF(models.Model):
     dranef = models.ForeignKey(DRANEF, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class ZDTF(models.Model):
@@ -27,7 +27,7 @@ class ZDTF(models.Model):
     dpanef = models.ForeignKey(DPANEF, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class DFP(models.Model):
@@ -36,7 +36,7 @@ class DFP(models.Model):
     zdtf = models.ForeignKey(ZDTF, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 # Regional models
@@ -45,7 +45,7 @@ class Region(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Province(models.Model):
@@ -54,7 +54,7 @@ class Province(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Commune(models.Model):
@@ -63,7 +63,7 @@ class Commune(models.Model):
     province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 # Forest models
@@ -99,7 +99,7 @@ class Canton(models.Model):
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.canton_name
+        return f"{self.canton_name}"
 
 
 class Groupe(models.Model):
@@ -111,6 +111,7 @@ class Groupe(models.Model):
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
     canton = models.ForeignKey(Canton, on_delete=models.CASCADE, null=True, blank=True)
 
+
     def clean(self):
         if not self.canton and not self.forest:
             raise ValidationError("Groupe must be related to either a forest or a canton.")
@@ -118,28 +119,29 @@ class Groupe(models.Model):
             raise ValidationError("Groupe cannot be related to both a canton and a forest.")
 
     def __str__(self):
-        return self.groupe_name
+        return f"{self.groupe_name}"
 
 
 class Parcelle(models.Model):
     id_parcelle = models.AutoField(primary_key=True)
     parcelle_name = models.CharField(max_length=255)
-    surface_area = models.DecimalField(max_digits=6, decimal_places=3)
-    location = models.CharField(max_length=255, null=True, blank=True)
-    groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE, null=True, blank=True)
-    commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True, blank=True)
+    surface_area = models.DecimalField(max_digits=6,decimal_places=3)
+    location = models.CharField(max_length=255, null=True,blank=True)
+    groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE,null=True, blank=True)
+    geom =gis_model.PolygonField(srid=4326,null=True, blank=True)
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE,null=True, blank=True)
     dfp = models.ForeignKey(DFP, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.parcelle_name
+        return f"{self.parcelle_name}"
 
 
 class Species(models.Model):
-    id_groupe = models.AutoField(primary_key=True)
+    id_species = models.AutoField(primary_key=True)
     scientific_name = models.CharField(max_length=255, blank=True)
     vernacular_name = models.CharField(max_length=255, null=True, blank=True)
     french_name = models.CharField(max_length=255, null=True, blank=True)
-    geom = gis_model.PointField(srid=4326, null=True, blank=True)
+    # geom = gis_model.PointField(srid=4326, null=True, blank=True)
     species_importance = models.TextField()
 
     def __str__(self):
@@ -156,3 +158,28 @@ class ParcelSpecies(models.Model):
 
     def __str__(self):
         return str(self.scientific_name)
+
+#model for the point cloud metadata 
+class PointCloudMetaData(models.Model):
+    object_id = models.IntegerField(unique=True,primary_key=True)
+    species = models.CharField(max_length= 225, null=True,blank=True)
+    height = models.FloatField()
+    circuference =models.FloatField()
+    #volume = models.FloatField(null=True, blank=True),
+    more_fields = models.JSONField(null=True, blank=True)
+    description = models.TextField(null=True,blank=True)
+    
+    # def calculate_volume(self):
+    #     if self.circumference and self.height:
+    #         radius = self.circumference / (2 * math.pi)
+    #         self.volume = math.pi * (radius ** 2) * self.height
+    #         return self.volume
+    #     return None
+    # def save(self, *args, **kwargs):
+    #     # Automatically calculate volume before saving
+    #     self.calculate_volume()
+    #     super(PointCloudMetadata, self).save(*args, **kwargs)
+
+    
+    def __str__(self):
+        return f"object {self.object_id}:{self.species if self.species else 'unknown'}" 

@@ -17,7 +17,10 @@ Including another URLconf
 from django.contrib import admin 
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('globetude/',include('gisportal.urls'))
+    path('globetudes/',include('gisportal.urls'))  
 ]
+admin.site.site_header= "Globetudes Geoportal Admin"
+admin.site.index_title = "Geoportal Admin Site"
