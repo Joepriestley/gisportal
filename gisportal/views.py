@@ -1,4 +1,9 @@
+from django.conf import settings 
+import requests,logging
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.shortcuts import render
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
 from rest_framework import generics, status 
@@ -7,7 +12,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from gisportal.models import (DRANEF,DPANEF,ZDTF,DFP,Region, Province, Commune, Forest, Canton, Groupe, Parcelle,Species,ParcelSpecies,PointCloudMetaData)
 
 from gisportal.serializers import (DRANEFSerializer,DPANEFSerializer,ZDTFSerializer,DFPSerializer,RegionSerializer, ProvinceSerializer, CommuneSerializer, ForestSerializer, CantonSerializer, GroupeSerializer, ParcelleSerializer,SpeciesSerializer,ParcelSpeciesSerializer,PointCloudMetaDataSerializer)
-from rest_framework.views import APIView
+
 from gisportal.pagination import LargeResultsSetPagination
 
 
@@ -61,8 +66,7 @@ class RegionList(generics.ListCreateAPIView):
 class RegionDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset =Region.objects.all()
     serializer_class = RegionSerializer
-    
-    
+       
 class ProvinceList(generics.ListCreateAPIView):
     queryset = Province.objects.all()
     serializer_class = ProvinceSerializer
@@ -152,20 +156,8 @@ def get_metadata(request,object_id):
 
     except PointCloudMetaData.DoesNotExist:
         return Response({"error": "Metadata not found"},status.HTTP_404_NOT_FOUND)
-    
-class CesiumIonAssetView(APIView):
-    permission_classes = [IsAuthenticated]  # Restrict access as needed
-
-    def get(self, request):
-        # Replace with your asset ID and token from Cesium Ion
-        asset_data = {
-            "asset_id": 2752122,  # Replace with your actual asset ID
-            
-            "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWE3ZmFhOS01M2MzLTRiMWUtODI0ZS05YmJjZjI0ZGYzZDEiLCJpZCI6MjQxNTkyLCJpYXQiOjE3MjYzMDg1Nzl9.p3LFJJ7_1ZYfrf7MgCswSWiJONwnxhBjiO8TymV4NOs", 
-        }
-        return Response(asset_data)
-    
-    
+  
+  
 
 # Create your views here.
 def cesium_view(request):
@@ -175,3 +167,37 @@ def home(request):
     return render(request, 'home.html')
 
 
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CesiumIonAssetView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        access_token = settings.CESIUM_ACCESS_TOKEN
+        cesium_api_url = "https://api.cesium.com/v1/assets"
+
+        if not access_token:
+            return Response(
+                {"error": "Cesium access token is not configured in settings"},
+                status=500
+            )
+
+        try:
+            response = requests.get(
+                cesium_api_url,
+                headers={"Authorization": f"Bearer {access_token}"},
+                timeout=10
+            )
+            if response.status_code == 200:
+                assets = response.json()
+                return Response(assets)
+            else:
+                return Response(
+                    {"error": f"Cesium API returned: {response.status_code}"},
+                    status=response.status_code
+                )
+        except requests.RequestException as e:
+            return Response(
+                {"error": f"An error occurred: {str(e)}"},
+                status=500
+            )
