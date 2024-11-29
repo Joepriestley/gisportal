@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-!^4!@jernusnxf_qk%_2gux-$y&y$izd!^dh=1mcm^1be8^t(t
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CORS_ALLOW_ALL_ORIGINS = True  # Only for testing; disable in production
 
 # Application definition
 
@@ -49,6 +49,17 @@ INSTALLED_APPS = [
     'gisportal',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -63,7 +74,7 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",  # Or wherever CesiumJS frontend is hosted
+    "http://localhost:9008",  # Or wherever CesiumJS frontend is hosted
 ]
 
 ROOT_URLCONF = 'globegeoportal.urls'
@@ -93,10 +104,10 @@ WSGI_APPLICATION = 'globegeoportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'globegeoportal',
-        'USER':'postgres',
-        'HOST':'localhost',
-        'PASSWORD':1114
+        'NAME': config('DB_NAME', default='globegeoportal'),
+        'USER':config('DB_USER',default='postgres'),
+        'HOST':config('DB_HOST',default='localhost'),
+        'PASSWORD':config('DB_PASSWORD',default='1114')
     }
 }
 
