@@ -13,7 +13,7 @@ async function initializeCesium() {
     const assetData = await fetchCesiumAssets();
 
     // Set Cesium Ion access token
-    Cesium.Ion.defaultAccessToken = "YOUR_CESIUM_ION_ACCESS_TOKEN";
+    Cesium.Ion.defaultAccessToken = Cesium.Ion.defaultAccessToken;
 
     // Create a CesiumJS viewer
     const viewer = new Cesium.Viewer('cesiumContainer', {

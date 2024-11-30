@@ -104,10 +104,10 @@ WSGI_APPLICATION = 'globegeoportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': config('DB_NAME', default='globegeoportal'),
-        'USER':config('DB_USER',default='postgres'),
-        'HOST':config('DB_HOST',default='localhost'),
-        'PASSWORD':config('DB_PASSWORD',default='1114')
+        'NAME': config('DB_NAME'),
+        'USER':config('DB_USER'),
+        'HOST': config('DB_HOST'),
+        'PASSWORD':config('DB_PASSWORD')
     }
 }
 
