@@ -1,8 +1,9 @@
 from django.urls import path 
 from .  import views
-from gisportal.views import CesiumIonAssetView
+from gisportal.views import CesiumIonAssetView, CesiumIonToken
 
 urlpatterns=[
+    path('api/cesium-ion-token/',CesiumIonToken.as_view(), name="get-cesium-token"),
     
     path('api/metadata/<int:object_id>/', views.get_metadata, name='get_metadata'),
     

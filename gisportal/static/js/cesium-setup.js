@@ -1,3 +1,15 @@
+async function fetchCesiumToken() {
+    // Fetch the token from your Django backend
+    const response = await fetch('http://127.0.0.1:9008/globetudes/api/cesium-ion-token/'); // Adjust your API endpoint URL
+    if (response.ok) {
+        const data = await response.json();
+        return data.access_token;  // Extract the token from the response
+    } else {
+        console.error("Failed to fetch Cesium access token:", response.statusText);
+        return null; // Return null if there was an error
+    }
+}
+
 async function fetchCesiumAssets() {
     const response = await fetch('http://127.0.0.1:9008/globetudes/cesium-ion/'); // Adjust API endpoint URL
     if (response.ok) {
@@ -8,14 +20,21 @@ async function fetchCesiumAssets() {
     }
 }
 
-async function initializeCesium() {
-    // Fetch Cesium assets
+async function initializeCesium(){
+    // Fetch Cesium Ion access token from backend
+    const cesiumAccessToken = await fetchCesiumToken();
+    if (!cesiumAccessToken) {
+        console.error("No Cesium Ion token received.");
+        return;
+    }
+
+    // Set Cesium Ion access token dynamically
+    Cesium.Ion.defaultAccessToken = cesiumAccessToken;
+
+    // Fetch Cesium assets from the backend
     const assetData = await fetchCesiumAssets();
 
-    // Set Cesium Ion access token
-    Cesium.Ion.defaultAccessToken = Cesium.Ion.defaultAccessToken;
-
-    // Create a CesiumJS viewer
+    // Initialize Cesium viewer
     const viewer = new Cesium.Viewer('cesiumContainer', {
         terrainProvider: Cesium.createWorldTerrain(),
         animation: false,

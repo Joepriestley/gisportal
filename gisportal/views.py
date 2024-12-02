@@ -16,6 +16,13 @@ from gisportal.serializers import (DRANEFSerializer,DPANEFSerializer,ZDTFSeriali
 from gisportal.pagination import LargeResultsSetPagination
 
 
+
+
+#getting cesium ion token 
+class CesiumIonToken(APIView):
+    def get(self,request):
+        return Response({'access_token': settings.CESIUM_ACCESS_TOKEN})
+
 # Serialization
 class DRANEFList(generics.ListCreateAPIView):
     queryset= DRANEF.objects.all()
