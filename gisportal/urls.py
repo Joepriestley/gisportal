@@ -48,7 +48,13 @@ urlpatterns=[
     
     path('gisportal/', views.cesium_view),
     
-    path('home/', views.home),
+    path('home/', views.home, name='home'),
+    path('main-portal/',views.portal, name="portal"),
+    path('contact_us/', views.contact_us, name='contact_us'),
+    path('about_us/', views.about_us, name='about_us'),
+    path('signup/',views.signup, name='signup'),
+    path('login/', views.login_view, name='login'),
+    
     path('cesium-ion/', CesiumIonAssetView.as_view(), name='cesium-ion-asset')
     
 ]

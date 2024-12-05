@@ -37,7 +37,7 @@ async function initializeCesium(){
     // Initialize Cesium viewer
     const viewer = new Cesium.Viewer('cesiumContainer', {
         terrainProvider: Cesium.createWorldTerrain(),
-        animation: false,
+        animation: true,
         timeline: false,
         baseLayerPicker: true,
     });

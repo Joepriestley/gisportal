@@ -1,8 +1,8 @@
+from django.shortcuts import render
 from django.conf import settings 
 import requests,logging
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response 
@@ -14,6 +14,29 @@ from gisportal.models import (DRANEF,DPANEF,ZDTF,DFP,Region, Province, Commune, 
 from gisportal.serializers import (DRANEFSerializer,DPANEFSerializer,ZDTFSerializer,DFPSerializer,RegionSerializer, ProvinceSerializer, CommuneSerializer, ForestSerializer, CantonSerializer, GroupeSerializer, ParcelleSerializer,SpeciesSerializer,ParcelSpeciesSerializer,PointCloudMetaDataSerializer)
 
 from gisportal.pagination import LargeResultsSetPagination
+
+
+# Create your views here.
+def cesium_view(request):
+    return render(request, 'gisportal/index.html')
+
+def home(request):
+    return render(request, 'gisportal/home.html')
+
+def portal(request):
+    return render(request, 'gisportal/portal.html')
+
+def contact_us(request):
+    return render(request, 'gisportal/contact_us.html')
+
+def about_us(request):
+    return render(request, 'gisportal/about_us.html')
+
+def signup(request):
+    return render(request, 'gisportal/auth/signup.html')
+
+def login_view(request):
+    return render(request, 'gisportal/auth/login.html')
 
 
 
@@ -164,15 +187,6 @@ def get_metadata(request,object_id):
     except PointCloudMetaData.DoesNotExist:
         return Response({"error": "Metadata not found"},status.HTTP_404_NOT_FOUND)
   
-  
-
-# Create your views here.
-def cesium_view(request):
-    return render(request, 'index.html')
-
-def home(request):
-    return render(request, 'home.html')
-
 
 
 @method_decorator(csrf_exempt, name='dispatch')
