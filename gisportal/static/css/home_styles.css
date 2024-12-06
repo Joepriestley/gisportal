@@ -1,0 +1,45 @@
+        #mainContent {
+            height: calc(100% - 56px); /* Adjust based on navbar height */
+            position: relative;
+        }
+        #cesiumContainer {
+            width: 100%;
+            height:90vh; /* Full viewport height */
+            position: relative; /* Ensures other elements can layer correctly */
+            overflow: hidden;
+            margin-top:1px ;
+            top: 5px;
+        }
+
+
+        #assetToggle {
+            cursor: pointer;
+            font-size: 24px;
+            color: #f9d7d7;
+            margin: 10px;
+        }
+
+        #assetToggle:hover {
+            color: #b1d0f2; /* Change color on hover */
+        }
+
+        #assetList{
+            position: absolute;
+            top: 5.5rem;
+            left: 1.5rem;
+            background: rgb(223, 218, 218);
+            border: 1px solid #896f6f;
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 100px; /* Limits height for scrollable content */
+            overflow-y: scroll;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* hiding scrollbar for webkit browsers  */
+        #assetList::-webkit-scrollbar{
+            display: none;
+        }
+        /* Hide scrollbar for Firefox */
+        #assetList {
+            scrollbar-width: none;
+        }

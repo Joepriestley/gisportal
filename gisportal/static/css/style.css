@@ -1,6 +1,7 @@
 /* Custom Styling */
 .navbar {
     background-color: #1a1a1a;
+    z-index: 10;
 }
 .navbar-brand {
     font-size: 1.5rem;
