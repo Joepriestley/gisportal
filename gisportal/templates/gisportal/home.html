@@ -18,7 +18,13 @@
 
 {% block content %}
     <!-- Cesium Container -->
-    <div id="cesiumContainer" class="top"></div>
+    <div id="cesiumContainer"></div>
+
+    <!--icon to toggle visibility of asset list -->
+    <div id="assetToggle" title="View available assets/Voir les actifs">
+        <i class="fas fa-list"></i>
+
+    </div>
 
     <!-- Asset List -->
     <div id="assetList">
@@ -32,4 +38,5 @@
 
     <!-- Custom JS -->
     <script src="{% static 'js/cesium-setup.js' %}"></script>
+
 {% endblock extra_scripts %}

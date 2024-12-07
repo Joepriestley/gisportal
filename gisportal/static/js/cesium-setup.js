@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const toggleIcon = document.getElementById('toggleIcon');
+    const assetToggle= document.getElementById('assetToggle');
     const assetList = document.getElementById('assetList');
 
-    toggleIcon.addEventListener('click', () => {
+    assetToggle.addEventListener('click', () => {
         const isVisible = assetList.style.display === 'block';
         assetList.style.display = isVisible ? 'none' : 'block';
 
         // Toggle the icon between open and close states
-        toggleIcon.className = isVisible ? 'fas fa-list' : 'fas fa-times'; // List icon or Close icon
+        // assetToggle.className = isVisible ? 'fas fa-times':'' // List icon or Close ico
     });
 });
 
