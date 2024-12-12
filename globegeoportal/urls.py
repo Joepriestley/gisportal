@@ -20,7 +20,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('globetudes/',include('gisportal.urls'))  
+    path('globetudes/',include('gisportal.urls')),
+    path('auth_custom/',include('django.contrib.auth.urls')),
+    path('auth_custom/',include('auth_custom.urls')),     
 ]
 admin.site.site_header= "Globetudes Geoportal Admin"
 admin.site.index_title = "Geoportal Admin Site"

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'gisportal',
+    'auth_custom',
 ]
 
 REST_FRAMEWORK = {
