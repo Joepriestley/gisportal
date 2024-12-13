@@ -47,8 +47,16 @@ async function initializeCesium() {
         terrainProvider: Cesium.createWorldTerrain(),
         animation: false,
         timeline: false,
-        baseLayerPicker: false,
+        baseLayerPicker: true,
     });
+
+    // center to Morocco
+    viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(-13,27.7, 4900000), // Longitude, Latitude, Height
+        //duration: 1,  Duration in seconds for the transition
+    });
+    
+    console.log(viewer.camera.getRectangleCoordinates);
 
     const loadedAssets = {};
     const assetList = document.getElementById('assetList');

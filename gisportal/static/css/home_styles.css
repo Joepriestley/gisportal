@@ -11,11 +11,11 @@
         }
 
 
-        #assetToggle {
+        #assetToggle[data-clicked="false"] {
             position:relative;
             cursor: pointer;
             font-size: 24px;
-            color: #3dd907;
+            color: #b7f0a7;
             margin: 10px;
             z-index: 10000;
             top:-45.7rem;
@@ -23,7 +23,11 @@
         }
 
         #assetToggle:hover {
-            color: #b1d0f2; /* Change color on hover */
+            color: #6da639; /* Change color on hover */
+        }
+
+        #assetToggle[data-clicked="true"]{
+            color: #3e5268; /* Change color on hover */
         }
        
         #assetList{
