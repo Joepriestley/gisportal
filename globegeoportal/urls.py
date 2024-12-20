@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('globetudes/',include('gisportal.urls')),
     path('auth_custom/',include('django.contrib.auth.urls')),
+    path('dashboard/',include('dashboard.urls')),
     path('auth_custom/',include('auth_custom.urls')),     
 ]
 admin.site.site_header= "Globetudes Geoportal Admin"

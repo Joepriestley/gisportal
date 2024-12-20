@@ -1,0 +1,129 @@
+
+
+{% load static %}
+<title>{% block title %}Geoportal Dashboard{% endblock title %}</title>
+
+{% block extra_heads %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/dashboard_style.css' %}">
+{% endblock extra_heads %}
+
+{% block content%}
+    <div class="container">
+        <div class="topbar">
+            <div class="logo">
+                <img src="{% static 'img/globetudes.jpg' %}" alt="Logo">
+            </div>
+            <div class="search">
+                
+                
+            </div>
+            <div class="greet">Joseph</div>
+            <i class="fa fa-bell"></i>
+            <div class="user">
+                
+                <img src="{% static 'img/user.jpeg' %}" alt="User">
+            </div>
+        </div>
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-th-large"></i>
+                        <div>Dashboard</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-eye"></i>
+                        <div>Visualize</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-sharp fa-solid fa-plus"></i>
+                        <div>Add Data</div>
+                    </a>
+                </li>
+                
+            
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-chart-bar"></i>
+                        <div>Analytics</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <div>Settings</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa-regular fa-question"></i>
+                        <div>Help</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="cards">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number">47</div>
+                        <div class="card-name">Visualize</div>
+                    </div>
+                    <div class="icon-box">
+                        <img style ="width:50px; height:50px;"src="https://cdn-icons-png.flaticon.com/512/1700/1700483.png" alt="Visualize-icon">
+                       
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number">1217</div>
+                        <div class="card-name">Add Data</div>
+                    </div>
+                    <div class="icon-box">
+                        <img style ="width:50px; height:50px;"src="https://cdn-icons-png.flaticon.com/512/2312/2312340.png" alt="Visualize-icon">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number">1217</div>
+                        <div class="card-name">Users</div>
+                    </div>
+                    <div class="icon-box">
+                        <img style ="width:50px; height:50px;"src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png" alt="Usres-icon">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="number">1217</div>
+                        <div class="card-name">Settings</div>
+                    </div>
+                    <div class="icon-box">
+                        <img style ="width:50px; height:50px;"src="https://www.iconpacks.net/icons/1/free-settings-icon-778-thumb.png" alt="Settings-icon">
+                    </div>
+                </div>
+            </div>
+            <div class="charts">
+                <div class="chart">
+                    <h2>Earnings (Past 12 Months)</h2>
+                    <canvas id="lineChart"></canvas>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    {% endblock content%}
+
+    {% block extra_scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/dashboard_chart1.js' %}"></script>
+    <script src="{% static 'js/dashboard-chart2.js' %}"></script>
+    
+    {% endblock extra_scripts %}
+</body>
+</html>

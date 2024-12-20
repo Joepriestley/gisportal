@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'gisportal',
     'auth_custom',
+    'dashboard',
 ]
 
 REST_FRAMEWORK = {
