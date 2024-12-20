@@ -122,6 +122,7 @@
     background-color:#f5f5f5;
     border-radius: 10px;
     box-shadow: 0 7px 25px 0 rgba(0,0,0,0.08);
+    text-decoration: none;
 }
 .greet{
     position: absolute;
@@ -144,11 +145,14 @@
 .number{
     font-size: 35px;
     font-weight: 500;
-    color: #5160b7;
+    color: #b75c7f;
+    text-decoration: none;
+    
 }
 .card-name{
     color: #888;
     font-weight: 600;
+    text-decoration: none;
 }
 .icon-box{
     font-size:45px;

@@ -2,6 +2,9 @@ from django.urls import path
 from .  import views
 from gisportal.views import CesiumIonAssetView, CesiumIonToken
 
+
+app_name = 'gisportal'
+
 urlpatterns=[
     path('api/cesium-ion-token/',CesiumIonToken.as_view(), name="get-cesium-token"),
     
@@ -46,7 +49,7 @@ urlpatterns=[
     path('parcelspecies/', views.ParcelSpeciesList.as_view(), name="parcelspecies-list"),
     path('parcelspecies/<int:pk>/', views.ParcelSpeciesDetailView.as_view(), name="parcelspecies-Details"),
     
-    path('gisportal/', views.cesium_view),
+    path('gisportal/', views.cesium_view, name='gisportal'),
     
     path('home/', views.home, name='home'),
     path('main-portal/',views.portal, name="portal"),

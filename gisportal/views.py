@@ -41,7 +41,6 @@ def login_view(request):
 
 
 
-
 #getting cesium ion token 
 class CesiumIonToken(APIView):
     def get(self,request):
