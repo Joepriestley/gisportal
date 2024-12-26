@@ -155,9 +155,13 @@ class ParcelSpecies(models.Model):
     scientific_name = models.ForeignKey(Species, on_delete=models.PROTECT)
     parcelle = models.ForeignKey(Parcelle, on_delete=models.PROTECT)
     num_species = models.IntegerField()
+    num_total = models.IntegerField()
+    volume_total = models.DecimalField(max_digits=7, decimal_places=3, null=True, blank=True)
 
     def __str__(self):
-        return str(self.scientific_name)
+        nom_secientifique = self.scientific_name or ""
+        parcelle = self.parcelle or ""
+        return f"{nom_secientifique}, {parcelle}"
 
 #model for the point cloud metadata 
 class PointCloudMetaData(models.Model):
@@ -183,3 +187,11 @@ class PointCloudMetaData(models.Model):
     
     def __str__(self):
         return f"object {self.object_id}:{self.species if self.species else 'unknown'}" 
+    
+class EspeceInventaire(models.Model):
+    circonference = models.FloatField()
+    num_total_arbre= models.IntegerField()
+    hauteur = models.FloatField()
+    volume_total_arbre = models.DecimalField(max_digits=7, decimal_places=3, null=True, blank=True)
+    id_parcelspecies = models.ForeignKey(ParcelSpecies, on_delete=models.CASCADE)
+         

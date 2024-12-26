@@ -34,10 +34,10 @@ def about_us(request):
     return render(request, 'gisportal/about_us.html')
 
 def signup(request):
-    return render(request, 'gisportal/auth/signup.html')
+    return render(request, 'gisportal/inscription/signup.html')
 
 def login_view(request):
-    return render(request, 'gisportal/auth/login.html')
+    return render(request, 'authenticate/login.html')
 
 
 

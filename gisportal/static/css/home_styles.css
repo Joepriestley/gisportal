@@ -15,7 +15,7 @@
             position:relative;
             cursor: pointer;
             font-size: 24px;
-            color: #b7f0a7;
+            color: #d9e1f2;
             margin: 10px;
             width:10%;
             top:-45.7rem;
@@ -23,7 +23,7 @@
         }
 
         #assetToggle:hover {
-            color: #6da639; /* Change color on hover */
+            color: #d9e1f2; /* Change color on hover */
         }
 
         #assetToggle[data-clicked="true"]{
@@ -49,4 +49,12 @@
         /* Hide scrollbar for Firefox */
         #assetList {
             scrollbar-width: none;
+        }
+        .login {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            color: #17316a;
+            cursor: pointer;
         }

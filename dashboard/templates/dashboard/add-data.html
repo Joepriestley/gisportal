@@ -1,0 +1,53 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% load static %}
+<title>{% block title %}Geoportal Dashboard{% endblock title %}</title>
+
+{% block extra_heads %}
+<style>
+   
+</style>
+{% endblock extra_heads %}
+
+{% block content%}
+    <div class="main">
+        <div class="container">
+            <h1>Add Data</h1>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <br/>
+        <div class="container" style="display: flex; flex:1; flex-direction: row; justify-content: space-between;">
+            
+            <div style="flex:0.5; padding: 20px !important;">
+                <div class="mb-12" style="margin-bottom: 10px;">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+
+                  <div class="mb-12" style="margin-bottom: 10px;">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  </div>
+
+                  <button type="button" class="btn btn-primary">Primary</button>
+
+            </div>
+            <div style="flex:0.5; padding: 20px !important;">
+                <div class="input-group mb-12">
+                <label class="input-group-text" for="inputGroupFile01">Upload</label>
+                <input type="file" class="form-control" id="inputGroupFile01">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content%}
+
+{% block extra_scripts %}
+        
+{% endblock extra_scripts %}
+</body>
+</html>
+

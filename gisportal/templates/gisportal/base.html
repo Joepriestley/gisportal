@@ -22,7 +22,7 @@
             </a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="{% url 'gisportal:home' %}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="{% url 'dashboard:dashboard/main-dashboard' %}" class="nav-link">Dashboard</a></li>
 
                    
                     
@@ -30,7 +30,7 @@
                     <li class="nav-item"><a href="{% url 'gisportal:about_us' %}" class="nav-link">About us</a></li>
                 </ul>
                 <a href="{% url 'gisportal:signup' %}" class="btn btn-outline-light me-2">Sign up</a>
-                <a href="{% url 'login' %}" class="btn btn-light">Log in</a>
+                <a href="{% url 'auth_custom:registration/login' %}" class="btn btn-light">Log in</a>
             </div>
         </div>
     </nav>

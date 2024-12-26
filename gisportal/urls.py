@@ -56,7 +56,7 @@ urlpatterns=[
     path('contact_us/', views.contact_us, name='contact_us'),
     path('about_us/', views.about_us, name='about_us'),
     path('signup/',views.signup, name='signup'),
-    path('login/', views.login_view, name='login'),
+    path('login/', views.login_view, name='registration/login'),
     
     path('cesium-ion/', CesiumIonAssetView.as_view(), name='cesium-ion-asset')
     
