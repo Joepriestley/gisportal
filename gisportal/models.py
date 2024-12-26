@@ -79,7 +79,7 @@ class Forest(models.Model):
     id_forest = models.AutoField(primary_key=True)
     forest_name = models.CharField(max_length=255)
     location_name = models.CharField(max_length=255)
-    surface_area = models.DecimalField(max_digits=7, decimal_places=3)
+    surface_area = models.DecimalField(max_digits=12, decimal_places=3)
     geom = gis_model.MultiPolygonField(srid=4326, null=True, blank=True)
     num_canton = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     number_parcel = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
