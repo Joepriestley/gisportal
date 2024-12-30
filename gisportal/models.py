@@ -180,3 +180,12 @@ class PointCloudMetaData(models.Model):
     #     self.calculate_volume()
     #     super(PointCloudMetadata, self).save(*args, **kwargs)
 
+class EspeceInventaire(models.Model):
+    hauteur = models.FloatField(null=True, blank=True)
+    circonference = models.FloatField(null=True, blank=True)
+    num_total_arbre= models.IntegerField(null=True, blank=True)
+    volume_total_arbre = models.FloatField(null=True, blank=True)
+    id_parcelspecies = models.ForeignKey(ParcelSpecies, on_delete=models.CASCADE, null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.circonference}"

@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+]
+
+INSTALLED_APPS += [
     'rest_framework',
     'rest_framework_gis',
     'django_filters',
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'gisportal',
     'auth_custom',
     'dashboard',
+    'leaflet',
 ]
 
 REST_FRAMEWORK = {
