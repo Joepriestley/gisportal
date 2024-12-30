@@ -3,3 +3,5 @@
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 static/videos/bg1.mp4 filter=lfs diff=lfs merge=lfs -text
+*.pyc
+__pycache__/

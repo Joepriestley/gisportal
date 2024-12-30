@@ -76,7 +76,7 @@ class Forest(models.Model):
     id_forest = models.AutoField(primary_key=True)
     forest_name = models.CharField(max_length=255)
     location_name = models.CharField(max_length=255)
-    surface_area = models.DecimalField(max_digits=7, decimal_places=3)
+    surface_area = models.DecimalField(max_digits=12, decimal_places=3)
     geom = gis_model.MultiPolygonField(srid=4326, null=True, blank=True)
     number_canton = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     number_parcel = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
@@ -150,9 +150,13 @@ class ParcelSpecies(models.Model):
     scientific_name = models.ForeignKey(Species, on_delete=models.PROTECT)
     parcelle = models.ForeignKey(Parcelle, on_delete=models.PROTECT)
     num_species = models.IntegerField()
+    num_total = models.IntegerField()
+    volume_total = models.DecimalField(max_digits=7, decimal_places=3, null=True, blank=True)
 
     def __str__(self):
-        return str(self.scientific_name)
+        nom_secientifique = self.scientific_name or ""
+        parcelle = self.parcelle or ""
+        return f"{nom_secientifique}, {parcelle}"
 
 #model for the point cloud metadata 
 class PointCloudMetaData(models.Model):
