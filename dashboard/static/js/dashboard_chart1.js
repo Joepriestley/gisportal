@@ -7,7 +7,7 @@ const ctx = document.getElementById('lineChart');
 
 
       datasets: [{
-        label: 'Earnings in $',
+        label: 'Data',
         data: [2500,6000,2050,1900,2030,1905,2800,2300,2900,9000,1200,3000],
         backgroundColor:['rgba(85,85,85,1)'
 

@@ -3,7 +3,7 @@ from django.urls import path
 from django.shortcuts import render
 from gisportal.models import (
     DRANEF, DPANEF, DFP, ZDTF, Region, Province, Commune, 
-    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies
+    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire
 )
 
 # Custom Admin Site
@@ -167,7 +167,17 @@ class SpeciesAdmin(admin.ModelAdmin):
 # ParcelSpecies Admin
 @admin.register(ParcelSpecies)
 class ParcelSpeciesAdmin(admin.ModelAdmin):
-    list_display = ('scientific_name', 'num_species', 'parcelle')
+    list_display = ('scientific_name', 'num_species', 'parcelle', 'num_total','volume_total')
     search_fields = ('parcelle', 'scientific_name')
-    list_filter = ('scientific_name',)
+    list_filter = ('scientific_name','parcelle')
     autocomplete_fields = ['scientific_name']
+
+# espece_inventaire Admin
+
+@admin.register(EspeceInventaire)
+class  EspeceInventaireAdmin(admin.ModelAdmin):
+    list_display = ('circonference', 'num_total_arbre','hauteur', 'volume_total_arbre','id_parcelspecies')
+    search_fields = ('circonference', 'hauteur')
+    list_filter = ('id_parcelspecies',)
+    autocomplete_fields = ['id_parcelspecies']
+

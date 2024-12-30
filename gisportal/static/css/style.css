@@ -1,6 +1,6 @@
 /* Custom Styling */
 .navbar {
-    background-color: #1a1a1a;
+    background-color: #3949a1 !important;
     z-index: 10;
 }
 .navbar-brand {
@@ -9,7 +9,7 @@
     color: white;
 }
 .navbar-nav .nav-link {
-    color: white !important;
+    color: white ;
 }
 .btn-signup {
     color: #1a1a1a;

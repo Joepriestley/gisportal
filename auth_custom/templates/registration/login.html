@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">GeoDjango App</a>
+            <a class="navbar-brand" href="{% url 'gisportal:home' %}">GeoDjango App</a>
             <div>
                 {% if user.is_authenticated %}
                     <div class="d-flex">
@@ -19,7 +19,7 @@
                         <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm ms-3">Logout</a>
                     </div>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+                    <a href="{% url 'authenticate/login' %}" class="btn btn-primary btn-sm">Login</a>
                     <a href="{% url 'register' %}" class="btn btn-secondary btn-sm ms-2">Register</a>
                 {% endif %}
             </div>
