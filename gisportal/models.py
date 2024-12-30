@@ -1,6 +1,7 @@
 from django.db import models # type: ignore
 from django.contrib.gis.db import models as gis_model # type: ignore
 from django.core.exceptions import ValidationError # type: ignore
+import datetime
 
 
 # Administrative models
@@ -43,6 +44,7 @@ class DFP(models.Model):
 class Region(models.Model):
     id_region = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+    geom = gis_model.PolygonField(srid=4326, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -51,6 +53,7 @@ class Region(models.Model):
 class Province(models.Model):
     id_province = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+    geom = gis_model.PolygonField(srid=4326, null=True, blank=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -60,6 +63,7 @@ class Province(models.Model):
 class Commune(models.Model):
     id_commune = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
+    geom = gis_model.PolygonField(srid=4326, null=True, blank=True)
     province = models.ForeignKey(Province, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
@@ -68,34 +72,27 @@ class Commune(models.Model):
 
 # Forest models
 class Forest(models.Model):
-    FORMATION_CHOICES = [
-        ('R', 'LES RESINEUSES'),
-        ('F', 'LES FEUILLEUSES'),
-        ('C', 'LES CEDRAIES'),
-        ('S', 'LES SUBERAIES'),
-        ('P', 'LES PINEDES'),
-    ]
-
+    
     id_forest = models.AutoField(primary_key=True)
     forest_name = models.CharField(max_length=255)
     location_name = models.CharField(max_length=255)
     surface_area = models.DecimalField(max_digits=7, decimal_places=3)
     geom = gis_model.MultiPolygonField(srid=4326, null=True, blank=True)
-    num_canton = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
+    number_canton = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     number_parcel = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     titre_foncier = models.CharField(max_length=255, null=True, blank=True)
-    forest_formation = models.CharField(max_length=1, choices=FORMATION_CHOICES, default='F')
+    forest_formation = models.CharField(max_length=255,null=True, blank=True)
 
     def __str__(self):
-        return f"{self.forest_name}, {self.location_name}"
+        return f"{self.forest_name}"
 
 
 class Canton(models.Model):
     id_canton = models.AutoField(primary_key=True)
     canton_name = models.CharField(max_length=255)
     surface_area = models.DecimalField(max_digits=6, decimal_places=3)
-    geom = gis_model.MultiPolygonField(srid=4326, null=True, blank=True)
-    num_groupe = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
+    geom = gis_model.MultiPolygonField(srid=4326, null=True,blank=True)
+    number_groupe = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -145,10 +142,8 @@ class Species(models.Model):
     species_importance = models.TextField()
 
     def __str__(self):
-        vernacular = self.vernacular_name or ""
-        french = self.french_name or ""
-        scientific = self.scientific_name or ""
-        return f"{vernacular}, {french}, {scientific}"
+        scientific = self.scientific_name
+        return f"{scientific}"
 
 
 class ParcelSpecies(models.Model):
@@ -161,13 +156,14 @@ class ParcelSpecies(models.Model):
 
 #model for the point cloud metadata 
 class PointCloudMetaData(models.Model):
-    object_id = models.IntegerField(unique=True,primary_key=True)
-    species = models.CharField(max_length= 225, null=True,blank=True)
-    height = models.FloatField()
-    circuference =models.FloatField()
+    date_collection = models.DateField(null=True, blank=True, default=datetime.date.today)
+    collecteur = models.CharField(max_length=255, null=True, blank=True)
+    id_parcelle= models.ForeignKey(Parcelle, on_delete=models.CASCADE, null=True, blank=True)
+    threeD_modellink = models.URLField(null=True, blank=True)
+    
+    
     #volume = models.FloatField(null=True, blank=True),
-    more_fields = models.JSONField(null=True, blank=True)
-    description = models.TextField(null=True,blank=True)
+    # description = models.TextField(null=True,blank=True)
     
     # def calculate_volume(self):
     #     if self.circumference and self.height:
@@ -180,6 +176,3 @@ class PointCloudMetaData(models.Model):
     #     self.calculate_volume()
     #     super(PointCloudMetadata, self).save(*args, **kwargs)
 
-    
-    def __str__(self):
-        return f"object {self.object_id}:{self.species if self.species else 'unknown'}" 

@@ -104,7 +104,7 @@ class CantonInline(admin.TabularInline):
 class ForestAdmin(admin.ModelAdmin):
     list_display = (
         'id_forest', 'forest_name', 'location_name', 
-        'surface_area', 'num_canton', 'number_parcel', 
+        'surface_area', 'number_canton', 'number_parcel', 
         'titre_foncier', 'forest_formation'
     )
     search_fields = ('forest_name', 'location_name')
@@ -122,7 +122,7 @@ class GroupeInline(admin.TabularInline):
 @admin.register(Canton)
 class CantonAdmin(admin.ModelAdmin):
     list_display = (
-        'id_canton', 'canton_name', 'num_groupe', 
+        'id_canton', 'canton_name', 'number_groupe', 
         'surface_area', 'forest'
     )
     search_fields = ('canton_name',)
