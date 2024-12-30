@@ -5,6 +5,7 @@ from gisportal.models import (
     DRANEF, DPANEF, DFP, ZDTF, Region, Province, Commune, 
     Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire
 )
+from leaflet.admin import LeafletGeoAdmin
 
 # Custom Admin Site
 class CustomAdminSite(admin.AdminSite):
@@ -87,10 +88,10 @@ class ProvinceAdmin(admin.ModelAdmin):
 
 # Commune Admin
 @admin.register(Commune)
-class CommuneAdmin(admin.ModelAdmin):
+class CommuneAdmin(LeafletGeoAdmin):
     list_display = ('id_commune', 'name')
     search_fields = ('name',)
-
+    list_filter = ('name',)
 
 # Inline Admin for Canton
 class CantonInline(admin.TabularInline):
@@ -101,7 +102,7 @@ class CantonInline(admin.TabularInline):
 
 # Forest Admin
 @admin.register(Forest)
-class ForestAdmin(admin.ModelAdmin):
+class ForestAdmin(LeafletGeoAdmin):
     list_display = (
         'id_forest', 'forest_name', 'location_name', 
         'surface_area', 'number_canton', 'number_parcel', 
@@ -120,7 +121,7 @@ class GroupeInline(admin.TabularInline):
 
 # Canton Admin
 @admin.register(Canton)
-class CantonAdmin(admin.ModelAdmin):
+class CantonAdmin(LeafletGeoAdmin):
     list_display = (
         'id_canton', 'canton_name', 'number_groupe', 
         'surface_area', 'forest'
@@ -132,7 +133,7 @@ class CantonAdmin(admin.ModelAdmin):
 
 # Groupe Admin
 @admin.register(Groupe)
-class GroupeAdmin(admin.ModelAdmin):
+class GroupeAdmin(LeafletGeoAdmin):
     list_display = (
         'id_groupe', 'groupe_name', 'surface_area', 
         'parcel_number', 'forest', 'canton'
@@ -144,7 +145,7 @@ class GroupeAdmin(admin.ModelAdmin):
 
 # Parcelle Admin
 @admin.register(Parcelle)
-class ParcelleAdmin(admin.ModelAdmin):
+class ParcelleAdmin(LeafletGeoAdmin):
     list_display = (
         'id_parcelle', 'parcelle_name', 'surface_area', 
         'location', 'groupe', 'commune', 'dfp'

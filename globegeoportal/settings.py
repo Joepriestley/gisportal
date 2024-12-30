@@ -161,3 +161,18 @@ STATICFILES_DIRS = [BASE_DIR /'gisportal/static']
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (34.052235, -118.243683),
+   ' DEFAULT_ZOOM': 12,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'ATTRIBUTION_PREFIX': 'Powered by Django and Leaflet',
+    'SPATIAL_EXTENT': (-180, -90, 180, 90),
+    'SRID': 4326,
+    'TILES': [
+        ('OpenStreetMap', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 'OpenStreetMap'),
+        ('Aerial', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 'Aerial'),
+    ], 
+    'SCALE': 'metric',
+    
+}
