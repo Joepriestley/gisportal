@@ -90,7 +90,7 @@ class Forest(models.Model):
 class Canton(models.Model):
     id_canton = models.AutoField(primary_key=True)
     canton_name = models.CharField(max_length=255)
-    surface_area = models.DecimalField(max_digits=6, decimal_places=3)
+    surface_area = models.DecimalField(max_digits=12, decimal_places=3)
     geom = gis_model.MultiPolygonField(srid=4326, null=True,blank=True)
     number_groupe = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
@@ -102,7 +102,7 @@ class Canton(models.Model):
 class Groupe(models.Model):
     id_groupe = models.AutoField(primary_key=True)
     groupe_name = models.CharField(max_length=255, null=True)
-    surface_area = models.DecimalField(max_digits=6, decimal_places=3)
+    surface_area = models.DecimalField(max_digits=12, decimal_places=3)
     geom = gis_model.MultiPolygonField(srid=4326, null=True, blank=True)
     parcel_number = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
@@ -122,7 +122,7 @@ class Groupe(models.Model):
 class Parcelle(models.Model):
     id_parcelle = models.AutoField(primary_key=True)
     parcelle_name = models.CharField(max_length=255)
-    surface_area = models.DecimalField(max_digits=6,decimal_places=3)
+    surface_area = models.DecimalField(max_digits=12,decimal_places=3)
     location = models.CharField(max_length=255, null=True,blank=True)
     groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE,null=True, blank=True)
     geom =gis_model.PolygonField(srid=4326,null=True, blank=True)
@@ -151,7 +151,7 @@ class ParcelSpecies(models.Model):
     parcelle = models.ForeignKey(Parcelle, on_delete=models.PROTECT)
     num_species = models.IntegerField()
     num_total = models.IntegerField()
-    volume_total = models.DecimalField(max_digits=7, decimal_places=3, null=True, blank=True)
+    volume_total = models.DecimalField(max_digits=12, decimal_places=3, null=True, blank=True)
 
     def __str__(self):
         nom_secientifique = self.scientific_name or ""

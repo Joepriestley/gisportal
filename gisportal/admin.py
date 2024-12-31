@@ -73,7 +73,7 @@ class ZDTFAdmin(admin.ModelAdmin):
 
 # Region Admin
 @admin.register(Region)
-class RegionAdmin(admin.ModelAdmin):
+class RegionAdmin(LeafletGeoAdmin):
     list_display = ('id_region', 'name')
     search_fields = ('name',)
     list_filter = ('name',)
@@ -81,7 +81,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 # Province Admin
 @admin.register(Province)
-class ProvinceAdmin(admin.ModelAdmin):
+class ProvinceAdmin(LeafletGeoAdmin):
     list_display = ('id_province', 'name')
     search_fields = ('name',)
 

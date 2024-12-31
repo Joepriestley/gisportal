@@ -222,3 +222,6 @@ class CesiumIonAssetView(APIView):
                 {"error": f"An error occurred: {str(e)}"},
                 status=500
             )
+
+
+
