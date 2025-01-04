@@ -1,8 +1,10 @@
 from rest_framework import serializers
+from django.db import models
+from django_filters import CharFilter   
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from gisportal.models import (
     DRANEF, DPANEF, ZDTF, DFP, Region, Province, Commune, Forest,
-    Canton, Groupe, Parcelle, Species, ParcelSpecies,PointCloudMetaData
+    Canton, Groupe, Parcelle, Species, ParcelSpecies,PointCloudMetaData,UploadedFile
 )
 
 # Standard serializers for non-spatial models
@@ -59,14 +61,14 @@ class ForestSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Forest
         geo_field = "geom" 
-        fields = ('id_forest', 'forest_name', 'location_name', 'surface_area','num_canton', 'number_parcel', 'titre_foncier', 'forest_formation')
+        fields = ('id_forest', 'forest_name', 'location_name', 'surface_area','number_canton', 'number_parcel', 'titre_foncier', 'forest_formation')
         
     
 class CantonSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Canton
         geo_field = "geom"
-        fields = ('id_canton', 'canton_name', 'surface_area', 'num_groupe','forest')
+        fields = ('id_canton', 'canton_name', 'surface_area', 'number_groupe','forest')
 
 
 class GroupeSerializer(GeoFeatureModelSerializer):
@@ -104,8 +106,21 @@ class PointCloudMetaDataSerializer(serializers.ModelSerializer):
     class Meta:
         model:PointCloudMetaData
         fields = ['object_id', 'species', 'height','circuference ','more_fields','description'] 
-       
 
+class UploadedFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model:UploadedFile
+        fields='__all__'
+        
+        filter_overrides = {
+            models.FileField: {
+                'filter_class':CharFilter,
+                'extra': lambda f: {'lookup_expr': 'exact'},
+            },
+        }
+        
+        
+    
 #cesium ion serialization
 class CesiumIonAssetSerializer(serializers.Serializer):
     asset_id = serializers.IntegerField()

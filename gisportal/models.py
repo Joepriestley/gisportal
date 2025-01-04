@@ -1,6 +1,8 @@
-from django.db import models # type: ignore
-from django.contrib.gis.db import models as gis_model # type: ignore
-from django.core.exceptions import ValidationError # type: ignore
+from django.db import models  # type: ignore
+from django.contrib.gis.gdal import DataSource  # type: ignore
+from django.contrib.gis.geos import GEOSGeometry  # type: ignore
+from django.contrib.gis.db import models as gis_model  # type: ignore
+from django.core.exceptions import ValidationError  # type: ignore
 import datetime
 
 
@@ -72,7 +74,6 @@ class Commune(models.Model):
 
 # Forest models
 class Forest(models.Model):
-    
     id_forest = models.AutoField(primary_key=True)
     forest_name = models.CharField(max_length=255)
     location_name = models.CharField(max_length=255)
@@ -81,7 +82,7 @@ class Forest(models.Model):
     number_canton = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     number_parcel = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     titre_foncier = models.CharField(max_length=255, null=True, blank=True)
-    forest_formation = models.CharField(max_length=255,null=True, blank=True)
+    forest_formation = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.forest_name}"
@@ -91,7 +92,7 @@ class Canton(models.Model):
     id_canton = models.AutoField(primary_key=True)
     canton_name = models.CharField(max_length=255)
     surface_area = models.DecimalField(max_digits=12, decimal_places=3)
-    geom = gis_model.MultiPolygonField(srid=4326, null=True,blank=True)
+    geom = gis_model.MultiPolygonField(srid=4326, null=True, blank=True)
     number_groupe = models.IntegerField(null=True, blank=True)  # Allow NULL in DB
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -108,7 +109,6 @@ class Groupe(models.Model):
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
     canton = models.ForeignKey(Canton, on_delete=models.CASCADE, null=True, blank=True)
 
-
     def clean(self):
         if not self.canton and not self.forest:
             raise ValidationError("Groupe must be related to either a forest or a canton.")
@@ -122,11 +122,11 @@ class Groupe(models.Model):
 class Parcelle(models.Model):
     id_parcelle = models.AutoField(primary_key=True)
     parcelle_name = models.CharField(max_length=255)
-    surface_area = models.DecimalField(max_digits=12,decimal_places=3)
-    location = models.CharField(max_length=255, null=True,blank=True)
-    groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE,null=True, blank=True)
-    geom =gis_model.PolygonField(srid=4326,null=True, blank=True)
-    commune = models.ForeignKey(Commune, on_delete=models.CASCADE,null=True, blank=True)
+    surface_area = models.DecimalField(max_digits=12, decimal_places=3)
+    location = models.CharField(max_length=255, null=True, blank=True)
+    groupe = models.ForeignKey(Groupe, on_delete=models.CASCADE, null=True, blank=True)
+    geom = gis_model.PolygonField(srid=4326, null=True, blank=True)
+    commune = models.ForeignKey(Commune, on_delete=models.CASCADE, null=True, blank=True)
     dfp = models.ForeignKey(DFP, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -138,7 +138,6 @@ class Species(models.Model):
     scientific_name = models.CharField(max_length=255, blank=True)
     vernacular_name = models.CharField(max_length=255, null=True, blank=True)
     french_name = models.CharField(max_length=255, null=True, blank=True)
-    # geom = gis_model.PointField(srid=4326, null=True, blank=True)
     species_importance = models.TextField()
 
     def __str__(self):
@@ -158,34 +157,75 @@ class ParcelSpecies(models.Model):
         parcelle = self.parcelle or ""
         return f"{nom_secientifique}, {parcelle}"
 
-#model for the point cloud metadata 
+
+# Model for the point cloud metadata
 class PointCloudMetaData(models.Model):
     date_collection = models.DateField(null=True, blank=True, default=datetime.date.today)
     collecteur = models.CharField(max_length=255, null=True, blank=True)
-    id_parcelle= models.ForeignKey(Parcelle, on_delete=models.CASCADE, null=True, blank=True)
+    id_parcelle = models.ForeignKey(Parcelle, on_delete=models.CASCADE, null=True, blank=True)
     threeD_modellink = models.URLField(null=True, blank=True)
-    
-    
-    #volume = models.FloatField(null=True, blank=True),
-    # description = models.TextField(null=True,blank=True)
-    
+
+    # volume = models.FloatField(null=True, blank=True),
+    # description = models.TextField(null=True, blank=True)
+
     # def calculate_volume(self):
     #     if self.circumference and self.height:
     #         radius = self.circumference / (2 * math.pi)
     #         self.volume = math.pi * (radius ** 2) * self.height
     #         return self.volume
     #     return None
+
     # def save(self, *args, **kwargs):
     #     # Automatically calculate volume before saving
     #     self.calculate_volume()
     #     super(PointCloudMetadata, self).save(*args, **kwargs)
 
+
 class EspeceInventaire(models.Model):
     hauteur = models.FloatField(null=True, blank=True)
     circonference = models.FloatField(null=True, blank=True)
-    num_total_arbre= models.IntegerField(null=True, blank=True)
+    num_total_arbre = models.IntegerField(null=True, blank=True)
     volume_total_arbre = models.FloatField(null=True, blank=True)
     id_parcelspecies = models.ForeignKey(ParcelSpecies, on_delete=models.CASCADE, null=True, blank=True)
-    
+
     def __str__(self):
         return f"{self.circonference}"
+
+
+# Process the uploaded file
+class UploadedFile(models.Model):
+    file = models.FileField(upload_to='uploaded_files/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    processed = models.BooleanField(default=False)
+
+    def process_file(self):
+        try:
+            data_source = DataSource(self.file.path)
+            for layer in data_source:
+                for feature in layer:
+                    # Extract the geometry, and create a GEOSGeometry object
+                    geom = GEOSGeometry(feature.geom.wkt, srid=4326)
+                    attributes = feature.fields
+
+                    # Create or update in our model
+                    Parcelle.objects.create(
+                        parcelle_name=attributes.get('name', 'unnamed_Parcelle'),
+                        surface_area=attributes.get('surface_area', 0.0),
+                        geom=geom,
+                        location=attributes.get('location', 'unknown'),
+                    )
+            self.processed = True
+            self.save()
+        except Exception as e:
+            raise ValidationError(f"Error processing file: {e}")
+
+    def map_metadata(self):
+        for key, value in attributes.items():
+            if hasattr(model_instance, key):
+                setattr(model_instance, key, value)
+        model_instance.save()
+
+    # Check if the geometry already exists in the database
+    def validate_spatial_data(geom, model):
+        if model.objects.filter(geom=geom).exists():
+            raise ValidationError("Geometry already exists in the database.")

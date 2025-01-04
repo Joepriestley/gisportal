@@ -23,7 +23,7 @@ urlpatterns = [
     path('globetudes/',include('gisportal.urls', namespace='gisportal')),
     path('auth_custom/',include('django.contrib.auth.urls')),
     path('dashboard/',include('dashboard.urls', namespace='dashboard')),
-    path('auth_custom/',include('auth_custom.urls', namespace='auth_custom')),     
+    path('auth_custom/',include('auth_custom.urls', namespace='auth_custom')),
 ]
 admin.site.site_header= "Globetudes Geoportal Admin"
 admin.site.index_title = "Geoportal Admin Site"
