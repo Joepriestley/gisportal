@@ -65,11 +65,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pointcloudmetadata',
             name='id',
-<<<<<<< HEAD
             field=models.BigAutoField(auto_created=True, default=1, primary_key=True, serialize=False, verbose_name='ID'),
-=======
-            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
->>>>>>> 94bfddb8f46f16ce9235560b64190c55116393d6
             preserve_default=False,
         ),
         migrations.AddField(
@@ -123,7 +119,6 @@ class Migration(migrations.Migration):
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
         migrations.AlterField(
-<<<<<<< HEAD
             model_name='parcelspecies',
             name='num_species',
             field=models.IntegerField(blank=True, null=True),
@@ -137,10 +132,5 @@ class Migration(migrations.Migration):
             model_name='parcelspecies',
             name='volume_total',
             field=models.FloatField(blank=True, null=True),
-=======
-            model_name='forest',
-            name='surface_area',
-            field=models.DecimalField(decimal_places=3, max_digits=12),
->>>>>>> 94bfddb8f46f16ce9235560b64190c55116393d6
         ),
     ]
