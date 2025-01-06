@@ -10,9 +10,9 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
-from gisportal.models import  (DRANEF,DPANEF,ZDTF,DFP,Region, Province, Commune, Forest, Canton, Groupe, Parcelle,Species,ParcelSpecies,PointCloudMetaData, UploadedFile)
+from gisportal.models import  (DRANEF,DPANEF,ZDTF,DFP,Region, Province, Commune, Forest, Canton, Groupe, Parcelle,Species,ParcelSpecies,PointCloudMetaData)
 
-from gisportal.serializers import (DRANEFSerializer,DPANEFSerializer,ZDTFSerializer,DFPSerializer,RegionSerializer, ProvinceSerializer, CommuneSerializer, ForestSerializer, CantonSerializer, GroupeSerializer, ParcelleSerializer,SpeciesSerializer,ParcelSpeciesSerializer,PointCloudMetaDataSerializer, UploadedFileSerializer)
+from gisportal.serializers import (DRANEFSerializer,DPANEFSerializer,ZDTFSerializer,DFPSerializer,RegionSerializer, ProvinceSerializer, CommuneSerializer, ForestSerializer, CantonSerializer, GroupeSerializer, ParcelleSerializer,SpeciesSerializer,ParcelSpeciesSerializer,PointCloudMetaDataSerializer)
 
 from gisportal.pagination import LargeResultsSetPagination
 
@@ -176,16 +176,6 @@ class ParcelSpeciesList(generics.ListCreateAPIView):
 class ParcelSpeciesDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=ParcelSpecies.objects.all()
     serializer_class=ParcelSpeciesSerializer
-
-class UploadedFileList(generics.ListCreateAPIView):
-    queryset =UploadedFile.objects.all()
-    serializer_class = UploadedFileSerializer
-    filter_backends =[DjangoFilterBackend]
-    filterset_fields=['file']
-    
-class UploadedFileDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset =UploadedFile.objects.all()
-    serializer_class = UploadedFileSerializer
 
 
 @api_view(['GET'])

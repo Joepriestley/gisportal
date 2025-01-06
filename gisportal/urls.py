@@ -49,9 +49,7 @@ urlpatterns=[
     path('parcelspecies/', views.ParcelSpeciesList.as_view(), name="parcelspecies-list"),
     path('parcelspecies/<int:pk>/', views.ParcelSpeciesDetailView.as_view(), name="parcelspecies-Details"),
     
-    path('uploadedfile/', views.UploadedFileList.as_view(), name="uploaded-list"),
-    path('uploadedfile/<int:pk>/', views.UploadedFileDetailView.as_view(), name="uploadedfile-Details"),
-    
+   
     path('gisportal/', views.cesium_view, name='gisportal'),
     
     path('home/', views.home, name='home'),

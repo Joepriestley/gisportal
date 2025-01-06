@@ -3,7 +3,7 @@ from django.urls import path
 from django.shortcuts import render
 from gisportal.models import (
     DRANEF, DPANEF, DFP, ZDTF, Region, Province, Commune, 
-    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire,UploadedFile
+    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire,
 )
 from leaflet.admin import LeafletGeoAdmin
 
@@ -143,16 +143,6 @@ class GroupeAdmin(LeafletGeoAdmin):
     raw_id_fields = ('forest', 'canton')
 
 
-#UploadedFile Admin
-@admin.register(UploadedFile)
-class UploadedFileAdmin(admin.ModelAdmin):
-    list_display = ('file', 'uploaded_at', 'processed')
-    actions = ['process_files']
-
-    def process_files(self, request, queryset):
-        for uploaded_file in queryset:
-            uploaded_file.process_file()
-    process_files.short_description = "Process selected files"
 
 # Parcelle Admin
 @admin.register(Parcelle)
