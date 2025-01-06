@@ -5,5 +5,5 @@ app_name ='auth_custom'
 
 urlpatterns=[
    
-    path('', views.login_user, name="registration/login")
+    path('', views.login_user, name="authenticate/login")
     ]

@@ -3,8 +3,9 @@ from django.urls import path
 from django.shortcuts import render
 from gisportal.models import (
     DRANEF, DPANEF, DFP, ZDTF, Region, Province, Commune, 
-    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire
+    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire,UploadedFile
 )
+from leaflet.admin import LeafletGeoAdmin
 
 # Custom Admin Site
 class CustomAdminSite(admin.AdminSite):
@@ -72,7 +73,7 @@ class ZDTFAdmin(admin.ModelAdmin):
 
 # Region Admin
 @admin.register(Region)
-class RegionAdmin(admin.ModelAdmin):
+class RegionAdmin(LeafletGeoAdmin):
     list_display = ('id_region', 'name')
     search_fields = ('name',)
     list_filter = ('name',)
@@ -80,17 +81,17 @@ class RegionAdmin(admin.ModelAdmin):
 
 # Province Admin
 @admin.register(Province)
-class ProvinceAdmin(admin.ModelAdmin):
+class ProvinceAdmin(LeafletGeoAdmin):
     list_display = ('id_province', 'name')
     search_fields = ('name',)
 
 
 # Commune Admin
 @admin.register(Commune)
-class CommuneAdmin(admin.ModelAdmin):
+class CommuneAdmin(LeafletGeoAdmin):
     list_display = ('id_commune', 'name')
     search_fields = ('name',)
-
+    list_filter = ('name',)
 
 # Inline Admin for Canton
 class CantonInline(admin.TabularInline):
@@ -101,7 +102,7 @@ class CantonInline(admin.TabularInline):
 
 # Forest Admin
 @admin.register(Forest)
-class ForestAdmin(admin.ModelAdmin):
+class ForestAdmin(LeafletGeoAdmin):
     list_display = (
         'id_forest', 'forest_name', 'location_name', 
         'surface_area', 'number_canton', 'number_parcel', 
@@ -120,7 +121,7 @@ class GroupeInline(admin.TabularInline):
 
 # Canton Admin
 @admin.register(Canton)
-class CantonAdmin(admin.ModelAdmin):
+class CantonAdmin(LeafletGeoAdmin):
     list_display = (
         'id_canton', 'canton_name', 'number_groupe', 
         'surface_area', 'forest'
@@ -132,7 +133,7 @@ class CantonAdmin(admin.ModelAdmin):
 
 # Groupe Admin
 @admin.register(Groupe)
-class GroupeAdmin(admin.ModelAdmin):
+class GroupeAdmin(LeafletGeoAdmin):
     list_display = (
         'id_groupe', 'groupe_name', 'surface_area', 
         'parcel_number', 'forest', 'canton'
@@ -142,9 +143,20 @@ class GroupeAdmin(admin.ModelAdmin):
     raw_id_fields = ('forest', 'canton')
 
 
+#UploadedFile Admin
+@admin.register(UploadedFile)
+class UploadedFileAdmin(admin.ModelAdmin):
+    list_display = ('file', 'uploaded_at', 'processed')
+    actions = ['process_files']
+
+    def process_files(self, request, queryset):
+        for uploaded_file in queryset:
+            uploaded_file.process_file()
+    process_files.short_description = "Process selected files"
+
 # Parcelle Admin
 @admin.register(Parcelle)
-class ParcelleAdmin(admin.ModelAdmin):
+class ParcelleAdmin(LeafletGeoAdmin):
     list_display = (
         'id_parcelle', 'parcelle_name', 'surface_area', 
         'location', 'groupe', 'commune', 'dfp'
