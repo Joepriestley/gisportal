@@ -149,7 +149,9 @@ class Species(models.Model):
 class ParcelSpecies(models.Model):
     scientific_name = models.ForeignKey(Species, on_delete=models.PROTECT)
     parcelle = models.ForeignKey(Parcelle, on_delete=models.PROTECT)
-    num_species = models.IntegerField()
+    num_species = models.IntegerField(null=True,blank=True)
+    volume_total =models.FloatField(null=True,blank=True)
+    num_total= models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.scientific_name)
@@ -176,3 +178,9 @@ class PointCloudMetaData(models.Model):
     #     self.calculate_volume()
     #     super(PointCloudMetadata, self).save(*args, **kwargs)
 
+class EspeceInventaire(models.Model):
+    circonference = models.FloatField(null=True,blank=True)
+    num_total_arbre = models.IntegerField(null=True,blank=True)
+    hauteur=models.FloatField(null=True,blank=True)
+    volume_total_arbre =models.FloatField(null=True,blank=True)
+    id_parcelspecies = models.ForeignKey(ParcelSpecies,on_delete=models.CASCADE, null=True, blank=True)
