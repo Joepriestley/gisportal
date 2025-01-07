@@ -186,3 +186,5 @@ class EspeceInventaire(models.Model):
     hauteur=models.FloatField(null=True,blank=True)
     volume_total_arbre =models.FloatField(null=True,blank=True)
     id_parcelspecies = models.ForeignKey(ParcelSpecies,on_delete=models.CASCADE, null=True, blank=True)
+    
+    

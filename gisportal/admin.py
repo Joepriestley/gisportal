@@ -93,11 +93,6 @@ class CommuneAdmin(LeafletGeoAdmin):
     search_fields = ('name',)
     list_filter = ('name',)
 
-# Inline Admin for Canton
-class CantonInline(admin.TabularInline):
-    model = Canton
-    extra = 1
-    max_num = 10
 
 
 # Forest Admin
@@ -110,13 +105,8 @@ class ForestAdmin(LeafletGeoAdmin):
     )
     search_fields = ('forest_name', 'location_name')
     list_filter = ('id_forest', 'forest_name')
-    inlines = [CantonInline]
+   
 
-
-# Inline Admin for Groupe
-class GroupeInline(admin.TabularInline):
-    model = Groupe
-    extra = 1
 
 
 # Canton Admin
@@ -128,7 +118,7 @@ class CantonAdmin(LeafletGeoAdmin):
     )
     search_fields = ('canton_name',)
     list_filter = ('id_canton', 'canton_name')
-    inlines = [GroupeInline]
+    
 
 
 # Groupe Admin
