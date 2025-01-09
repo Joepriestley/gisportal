@@ -7,6 +7,9 @@ from gisportal.models import (
 )
 from leaflet.admin import LeafletGeoAdmin
 
+
+
+
 # Custom Admin Site
 class CustomAdminSite(admin.AdminSite):
     site_header = "Geoportal Globetudes Admin"

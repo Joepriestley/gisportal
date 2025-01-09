@@ -187,4 +187,13 @@ class EspeceInventaire(models.Model):
     volume_total_arbre =models.FloatField(null=True,blank=True)
     id_parcelspecies = models.ForeignKey(ParcelSpecies,on_delete=models.CASCADE, null=True, blank=True)
     
-    
+
+
+class ShapefileUpload(models.Model):
+    name = models.CharField(max_length=255)
+    shapefile = models.FileField(upload_to="shapefiles/")  # Save .shp files
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name}"
+        

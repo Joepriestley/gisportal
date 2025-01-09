@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from django.conf import settings 
 import requests,logging
@@ -10,7 +11,7 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
-from gisportal.models import  (DRANEF,DPANEF,ZDTF,DFP,Region, Province, Commune, Forest, Canton, Groupe, Parcelle,Species,ParcelSpecies,PointCloudMetaData)
+from gisportal.models import  (DRANEF,DPANEF,ZDTF,DFP,Region, Province, Commune, Forest, Canton, Groupe, Parcelle,Species,ParcelSpecies,PointCloudMetaData,ShapefileUpload)
 
 from gisportal.serializers import (DRANEFSerializer,DPANEFSerializer,ZDTFSerializer,DFPSerializer,RegionSerializer, ProvinceSerializer, CommuneSerializer, ForestSerializer, CantonSerializer, GroupeSerializer, ParcelleSerializer,SpeciesSerializer,ParcelSpeciesSerializer,PointCloudMetaDataSerializer)
 
@@ -38,6 +39,11 @@ def signup(request):
 
 def login_view(request):
     return render(request, 'authenticate/login.html')
+
+
+
+
+
 
 
 
