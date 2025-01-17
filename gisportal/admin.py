@@ -3,10 +3,9 @@ from django.urls import path
 from django.shortcuts import render
 from gisportal.models import (
     DRANEF, DPANEF, DFP, ZDTF, Region, Province, Commune, 
-    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire,
+    Forest, Canton, Groupe, Parcelle, Species, ParcelSpecies,EspeceInventaire,Shp
 )
 from leaflet.admin import LeafletGeoAdmin
-
 
 
 
@@ -102,11 +101,11 @@ class CommuneAdmin(LeafletGeoAdmin):
 @admin.register(Forest)
 class ForestAdmin(LeafletGeoAdmin):
     list_display = (
-        'id_forest', 'forest_name', 'location_name', 
-        'surface_area', 'number_canton', 'number_parcel', 
-        'titre_foncier', 'forest_formation'
+        'id_forest', 'forest_name', 'loca_name', 
+        'superficie', 'num_canton', 'num_parcel', 
+        'titre_fonci', 'for_formatio'
     )
-    search_fields = ('forest_name', 'location_name')
+    search_fields = ('forest_name', 'loca_name')
     list_filter = ('id_forest', 'forest_name')
    
 
@@ -116,8 +115,8 @@ class ForestAdmin(LeafletGeoAdmin):
 @admin.register(Canton)
 class CantonAdmin(LeafletGeoAdmin):
     list_display = (
-        'id_canton', 'canton_name', 'number_groupe', 
-        'surface_area', 'forest'
+        'id_canton', 'canton_name', 'num_groupe', 
+        'superficie', 'forest'
     )
     search_fields = ('canton_name',)
     list_filter = ('id_canton', 'canton_name')
@@ -128,8 +127,8 @@ class CantonAdmin(LeafletGeoAdmin):
 @admin.register(Groupe)
 class GroupeAdmin(LeafletGeoAdmin):
     list_display = (
-        'id_groupe', 'groupe_name', 'surface_area', 
-        'parcel_number', 'forest', 'canton'
+        'id_groupe', 'groupe_name', 'superficie', 
+        'parcel_num', 'forest', 'canton'
     )
     search_fields = ('groupe_name',)
     list_filter = ('id_groupe', 'groupe_name')
@@ -141,38 +140,44 @@ class GroupeAdmin(LeafletGeoAdmin):
 @admin.register(Parcelle)
 class ParcelleAdmin(LeafletGeoAdmin):
     list_display = (
-        'id_parcelle', 'parcelle_name', 'surface_area', 
+        'id_parcel', 'parcelle', 'superficie', 
         'location', 'groupe', 'commune', 'dfp'
     )
-    search_fields = ('parcelle_name',)
-    list_filter = ('id_parcelle', 'parcelle_name')
+    search_fields = ('parcelle',)
+    list_filter = ('id_parcel', 'parcelle')
 
 
 # Species Admin
 @admin.register(Species)
 class SpeciesAdmin(admin.ModelAdmin):
     list_display = (
-        'id_species', 'scientific_name', 'vernacular_name', 
-        'french_name', 'species_importance'
+        'id_species', 'sci_name', 'vernac_name', 
+        'french_name', 'spp_decript'
     )
-    search_fields = ('scientific_name',)
-    list_filter = ('scientific_name',)
+    search_fields = ('sci_name',)
+    list_filter = ('sci_name',)
 
 
 # ParcelSpecies Admin
 @admin.register(ParcelSpecies)
 class ParcelSpeciesAdmin(admin.ModelAdmin):
-    list_display = ('scientific_name', 'num_species', 'parcelle', 'num_total','volume_total')
-    search_fields = ('parcelle', 'scientific_name')
-    list_filter = ('scientific_name','parcelle')
-    autocomplete_fields = ['scientific_name']
+    list_display = ('sci_name', 'num_species', 'parcelle', 'num_total','vol_total')
+    search_fields = ('parcelle', 'sci_name')
+    list_filter = ('sci_name','parcelle')
+    autocomplete_fields = ['sci_name']
 
 # espece_inventaire Admin
 
 @admin.register(EspeceInventaire)
 class  EspeceInventaireAdmin(admin.ModelAdmin):
-    list_display = ('circonference', 'num_total_arbre','hauteur', 'volume_total_arbre','id_parcelspecies')
+    list_display = ('circonf', 'num_arbre','hauteur', 'vol_arbre','id_parcespp')
     search_fields = ('circonference', 'hauteur')
-    list_filter = ('id_parcelspecies',)
-    autocomplete_fields = ['id_parcelspecies']
+    list_filter = ('id_parcespp',)
+    autocomplete_fields = ['id_parcespp']
 
+
+@admin.register(Shp)
+class ShpAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description', 'model_type', 'date')
+    list_filter = ('model_type',)  # Add a filter for model_type
+    search_fields = ('name', 'description')

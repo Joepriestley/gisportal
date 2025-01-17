@@ -16,9 +16,7 @@ from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-GDAL_LIBRARY_PATH = r"C:\OSGeo4W\bin\gdal309.dll"
-GDAL_DATA = r"C:\OSGeo4W\share\gdal"
-PROJ_LIB = r"C:\OSGeo4W\share\proj"
+
 
 CESIUM_ACCESS_TOKEN = config('Cesium.Ion.defaultAccessToken') 
 
