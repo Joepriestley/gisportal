@@ -124,8 +124,8 @@ class Groupe(models.Model):
     forest = models.ForeignKey(Forest, on_delete=models.CASCADE, null=True, blank=True)
     canton = models.ForeignKey(Canton, on_delete=models.CASCADE, null=True, blank=True)
     
-    class Meta:
-        db_table = 'Groupe'
+    # class Meta:
+    #     db_table = 'Groupe'
     
 
     def clean(self):
@@ -153,8 +153,8 @@ class Parcelle(models.Model):
     def __str__(self):
         return f"{self.parcelle}"
     
-    class Meta:
-        db_table = 'Parcelle'
+    # class Meta:
+    #     db_table = 'Parcelle'
 
 
 class Species(models.Model):
