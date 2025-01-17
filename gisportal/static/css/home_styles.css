@@ -42,6 +42,16 @@
             overflow-y: scroll;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
+
+        #assetListshp{
+            position: absolute;
+            top:15.5rem;
+           border-radius: 9px;
+            left: 3.5rem;
+            background: rgba(233,217,217,0.8);
+            display: none;
+            
+        }
         /* hiding scrollbar for webkit browsers  */
         #assetList::-webkit-scrollbar{
             display: none;
