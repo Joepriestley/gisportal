@@ -20,7 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('globetudes/',include('gisportal.urls', namespace='gisportal')),
+    path('globetudes/',include('globeportal.urls', namespace='globeportal')),
     path('auth_custom/',include('django.contrib.auth.urls')),
     path('dashboard/',include('dashboard.urls', namespace='dashboard')),
     path('auth_custom/',include('auth_custom.urls', namespace='auth_custom')),

@@ -52,7 +52,7 @@ INSTALLED_APPS += [
     'rest_framework_gis',
     'django_filters',
     'corsheaders',
-    'gisportal',
+    'globeportal',
     'auth_custom',
     'dashboard',
     'leaflet',
@@ -159,7 +159,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR /'gisportal/static']
+STATICFILES_DIRS = [BASE_DIR /'globeportal/static']
 MEDIA_ROOT= os.path.join(BASE_DIR,'media')
 MEDIA_URL ='media/'
 
@@ -168,8 +168,8 @@ MEDIA_URL ='media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (34.052235, -118.243683),
-   ' DEFAULT_ZOOM': 12,
+    'DEFAULT_CENTER':[36.79175, -7.09262],  # Rabat, Morocco
+    'DEFAULT_ZOOM': 7,
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 18,
     'ATTRIBUTION_PREFIX': 'Powered by Django and Leaflet',
@@ -180,5 +180,4 @@ LEAFLET_CONFIG = {
         ('Aerial', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 'Aerial'),
     ], 
     'SCALE': 'metric',
-    
 }
