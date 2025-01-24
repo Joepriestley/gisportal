@@ -59,35 +59,35 @@ class CommuneSerializer(serializers.ModelSerializer):
 class ForestSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Forest
-        geo_field = "geom" 
+        geo_field = "geometry" 
         fields = ('id_forest', 'forest_name', 'location_name', 'surface_area','number_canton', 'number_parcel', 'titre_foncier', 'forest_formation')
         
     
 class CantonSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Canton
-        geo_field = "geom"
+        geo_field = "geometry"
         fields = ('id_canton', 'canton_name', 'surface_area', 'number_groupe','forest')
 
 
 class GroupeSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Groupe
-        geo_field = "geom"
+        geo_field = "geometry"
         fields = ('id_groupe', 'groupe_name', 'surface_area', 'parcel_number', 'forest', 'canton')
 
 
 class ParcelleSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Parcelle
-        geo_field = "geom"
-        fields = ('id_parcelle', 'parcelle_name', 'surface_area', 'location', 'groupe', 'commune', 'dfp')
+        geo_field = "geometry"
+        fields = ('id_parcel', 'parcelle', 'superficie', 'location', 'groupe', 'commune', 'dfp')
 
 
 class SpeciesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Species
-        #geo_field = "geom"
+        #geo_field = "geometry"
         fields =('id_species', 'scientific_name', 'vernacular_name', 'french_name', 'species_importance')
 
 
