@@ -166,13 +166,10 @@ MEDIA_URL ='media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (31.7917, -7.0926),  # Latitude and Longitude for Morocco
+    'DEFAULT_CENTER':(31.7917, -7.0926),#(-789544.62, 3735998.97),  # Latitude and Longitude for Morocco
     'DEFAULT_ZOOM': 6,                     # Appropriate zoom level for Morocco
-   # 'MIN_ZOOM':,                         # Minimum zoom level to prevent zooming out too far
-   # 'MAX_ZOOM': ,                        # Maximum zoom level for details
+   
     'ATTRIBUTION_PREFIX': 'Powered by Django and Leaflet',
-    #,  # Bounding box for Morocco
-      # Ensure your data matches this SRID
     'TILES': [
         ('OpenStreetMap', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 'OpenStreetMap'),
         ('Aerial', 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 'Aerial'),
