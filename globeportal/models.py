@@ -13,7 +13,7 @@ import os
 import glob
 import zipfile
 from sqlalchemy import create_engine
-import pandas as pd
+import pandas as pd # type: ignore
 
 
 # Administrative models

@@ -1,0 +1,23 @@
+/* Custom Styling */
+.navbar {
+    background-color: #3949a1 !important;
+    z-index: 10;
+}
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+.navbar-nav .nav-link {
+    color: white ;
+}
+.btn-signup {
+    color: #1a1a1a;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+.btn-login {
+    color: white;
+    background-color: gray;
+    border: none;
+}

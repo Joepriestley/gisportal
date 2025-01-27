@@ -165,7 +165,7 @@ class SpeciesList(generics.ListCreateAPIView):
     queryset = Species.objects.all()
     serializer_class = SpeciesSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['scientific_name']
+    filterset_fields = ['sci_name']
 
 class SpeciesDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Species.objects.all()
@@ -175,7 +175,7 @@ class ParcelSpeciesList(generics.ListCreateAPIView):
     queryset = ParcelSpecies.objects.all()
     serializer_class = ParcelSpeciesSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['scientific_name']
+    filterset_fields = ['sci_name']
 
 class ParcelSpeciesDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=ParcelSpecies.objects.all()

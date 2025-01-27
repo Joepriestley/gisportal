@@ -1,0 +1,45 @@
+{% extends 'globeportal/base.html' %}
+
+{% load static %}
+
+{% block title %}Cesium Portal{% endblock title %}
+
+{% block extra_heads %}
+    <!-- Cesium Widget CSS -->
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.100/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'css/home_styles.css' %}">
+
+{% endblock extra_heads %}
+
+{% block content %}
+    <!-- Cesium Container -->
+    <div id="cesiumContainer"></div>
+
+    <!--icon to toggle visibility of asset list -->
+    <div id="assetToggle" title="View available assets/Voir les actifs" data-clicked = "false">
+        <i class="fas fa-list"></i>
+
+    </div>
+
+    <!-- Asset List -->
+    <div id="assetList">
+        <h3>Available Assets</h3>
+    </div>
+    <div id="assetListshp">
+        <h3>Available Shapefile </h3>
+    </div>
+{% endblock content %}
+
+{% block extra_scripts %}
+    <!-- Cesium JS -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.100/Build/Cesium/Cesium.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'js/cesium-setup.js' %}"></script>
+
+{% endblock extra_scripts %}
