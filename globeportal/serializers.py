@@ -59,36 +59,36 @@ class CommuneSerializer(serializers.ModelSerializer):
 class ForestSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Forest
-        geo_field = "geom" 
-        fields = ('id_forest', 'forest_name', 'location_name', 'surface_area','number_canton', 'number_parcel', 'titre_foncier', 'forest_formation')
+        geo_field = "geometry" 
+        fields = ('id_forest', 'forest_nam', 'loc_name', 'superficie','num_canton', 'num_parcel', 'titre_fonc', 'for_format')
         
     
 class CantonSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Canton
-        geo_field = "geom"
-        fields = ('id_canton', 'canton_name', 'surface_area', 'number_groupe','forest')
+        geo_field = "geometry"
+        fields = ('id_canton', 'canton_nam', 'superficie', 'num_groupe','forest_id')
 
 
 class GroupeSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Groupe
-        geo_field = "geom"
-        fields = ('id_groupe', 'groupe_name', 'surface_area', 'parcel_number', 'forest', 'canton')
+        geo_field = "geometry"
+        fields = ('id_groupe', 'groupe_name', 'superficie', 'parcel_num', 'forest', 'canton')
 
 
 class ParcelleSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Parcelle
-        geo_field = "geom"
-        fields = ('id_parcelle', 'parcelle_name', 'surface_area', 'location', 'groupe', 'commune', 'dfp')
+        geo_field = "geometry"
+        fields = ('id_parcel', 'parcelle', 'superficie', 'location', 'groupe_id', 'commune_id', 'dfp_id')
 
 
 class SpeciesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Species
-        #geo_field = "geom"
-        fields =('id_species', 'scientific_name', 'vernacular_name', 'french_name', 'species_importance')
+        #geo_field = "geometry"
+        fields =('id_species', 'sci_name', 'vernac_name', 'french_name', 'spp_descript')
 
 
 class ParcelSpeciesSerializer(serializers.ModelSerializer):
@@ -98,13 +98,13 @@ class ParcelSpeciesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ParcelSpecies
-        fields = ('species', 'parcelle','num_species')
+        fields = ('species', 'parcelle','num_species','sci_name','vol_total','num_total')
         
         
 class PointCloudMetaDataSerializer(serializers.ModelSerializer):
     class Meta:
         model:PointCloudMetaData
-        fields = ['object_id', 'species', 'height','circuference ','more_fields','description'] 
+        fields = ['date ','responsable','id_parcel','threeD_mod'] 
 
         
     

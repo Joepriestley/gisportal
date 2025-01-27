@@ -45,8 +45,6 @@ def login_view(request):
 
 
 
-
-
 #getting cesium ion token 
 class CesiumIonToken(APIView):
     def get(self,request):
@@ -127,7 +125,7 @@ class ForestList(generics.ListCreateAPIView):
     queryset = Forest.objects.all()
     serializer_class = ForestSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['forest_name']
+    filterset_fields = ['forest_nam']
 
 class ForestDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Forest.objects.all()
@@ -137,7 +135,7 @@ class CantonList(generics.ListCreateAPIView):
     queryset = Canton.objects.all()
     serializer_class = CantonSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['canton_name']
+    filterset_fields = ['canton_nam']
 
 class CantonDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset =Canton.objects.all()
@@ -157,7 +155,7 @@ class ParcelleList(generics.ListCreateAPIView):
     queryset = Parcelle.objects.all()
     serializer_class = ParcelleSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['parcelle_name']
+    filterset_fields = ['parcelle']
     
 class ParcelleDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Parcelle.objects.all()

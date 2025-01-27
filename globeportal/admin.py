@@ -85,14 +85,14 @@ class RegionAdmin(LeafletGeoAdmin):
 # Province Admin
 @admin.register(Province)
 class ProvinceAdmin(LeafletGeoAdmin):
-    list_display = ('id_province', 'name')
+    list_display = ('id_provinc', 'name','superficie','region')
     search_fields = ('name',)
 
 
 # Commune Admin
 @admin.register(Commune)
 class CommuneAdmin(LeafletGeoAdmin):
-    list_display = ('id_commune', 'name')
+    list_display = ('id_commune', 'name','superficie','province_i')
     search_fields = ('name',)
     list_filter = ('name',)
 
@@ -102,12 +102,12 @@ class CommuneAdmin(LeafletGeoAdmin):
 @admin.register(Forest)
 class ForestAdmin(LeafletGeoAdmin):
     list_display = (
-        'id_forest', 'forest_name', 'loc_name', 
+        'id_forest', 'forest_nam', 'loc_name', 
         'superficie', 'num_canton', 'num_parcel', 
-        'titre_fonci', 'for_format'
+        'titre_fonc', 'for_format'
     )
-    search_fields = ('forest_name', 'loc_name')
-    list_filter = ('id_forest', 'forest_name')
+    search_fields = ('forest_nam', 'loc_name')
+    list_filter = ('id_forest', 'forest_nam')
    
 
 
@@ -116,11 +116,11 @@ class ForestAdmin(LeafletGeoAdmin):
 @admin.register(Canton)
 class CantonAdmin(LeafletGeoAdmin):
     list_display = (
-        'id_canton', 'canton_name', 'number_groupe', 
-        'superficie', 'forest'
+        'id_canton', 'canton_nam', 'num_groupe', 
+        'superficie', 'forest_id'
     )
-    search_fields = ('canton_name',)
-    list_filter = ('id_canton', 'canton_name')
+    search_fields = ('canton_nam',)
+    list_filter = ('id_canton', 'canton_nam')
     
 
 
