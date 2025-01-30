@@ -133,8 +133,7 @@ class Groupe(models.Model):
     
     class Meta:
         db_table = 'groupe'
-
-
+        
 class Parcelle(models.Model):
     id_parcel = models.AutoField(primary_key=True, db_column='id_parcel')
     parcelle = models.CharField(max_length=255, db_column='parcelle')
