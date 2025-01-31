@@ -17,7 +17,7 @@
         <a href="{% url 'globeportal:home' %}" target="_blank">
             <div class="card">
                 <div class="card-content">
-                    <div class="number">47</div>
+                    <div class="number"></div>
                     <div class="card-name">Visualize</div>
                 </div>
                 <div class="icon-box">
@@ -29,7 +29,7 @@
         <a href="{% url 'dashboard:add-data' %}" >
             <div class="card">
                 <div class="card-content">
-                    <div class="number">1217</div>
+                    <div class="number"></div>
                     <div class="card-name">Add Data</div>
                 </div>
                 <div class="icon-box">
@@ -41,7 +41,7 @@
         <a href="#">
             <div class="card">
                 <div class="card-content">
-                    <div class="number">1217</div>
+                    <div class="number"></div>
                     <div class="card-name">Users</div>
                 </div>
                 <div class="icon-box">
@@ -52,7 +52,7 @@
 
         <div class="card">
             <div class="card-content">
-                <div class="number">1217</div>
+                <div class="number"></div>
                 <div class="card-name">Settings</div>
             </div>
             <div class="icon-box">
@@ -63,9 +63,15 @@
 
     <!-- Charts Section -->
     <div class="charts">
-        <h2>Forest Graphics</h2>
+        {% comment %} <h2>Forest Graphics</h2> {% endcomment %}
         <div class="chart">
-            <h3>Forest Graphics Details 1</h3>
+            <div class="chartType">
+                <button onclick="setChartType('bar')" >Bars</button>
+                <button onclick="setChartType('line')">Line</button>
+                <button onclick="setChartType('pie')">Pie</button>
+            </div>
+                <h4 style="position:center;">Forest Graphics Details 1</h4>
+            
             <canvas id="lineChart"></canvas>
         </div>
     </div>

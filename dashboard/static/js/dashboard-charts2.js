@@ -1,6 +1,7 @@
 // Assuming you have already included Chart.js library in your HTML
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    
     const ctx1 = document.getElementById('myPieChart').getContext('2d');
     const myPieChart = new Chart(ctx1, {
         type: 'pie',
