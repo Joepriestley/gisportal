@@ -209,6 +209,27 @@
     max-width: 800px;
     margin: auto;
 } */
+
+#itemDetails{
+    position:relative;
+    background-color: rgba(175, 3, 243, 0.954)!important; 
+    color: white;
+    left: 52%; 
+    width: 15%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#itemDetails:hover{
+    background-color: rgba(7, 84, 27, 0.954)!important; 
+    color: white;
+    cursor: pointer;
+}
+
 .chart {
     background: #fff;
     border-radius: 10px;
@@ -233,6 +254,13 @@
     font-size: 1px;
     color: #333;
     text-align: center;
+}
+
+#graphtitle{
+    text-align: center;
+    font-size: 15px;
+    color: #0b7242;
+    margin-bottom: 20px;
 }
 
 /* User Profile Dropdown */

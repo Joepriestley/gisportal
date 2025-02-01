@@ -64,13 +64,22 @@
     <!-- Charts Section -->
     <div class="charts">
         {% comment %} <h2>Forest Graphics</h2> {% endcomment %}
+        
         <div class="chart">
             <div class="chartType">
-                <button onclick="setChartType('bar')" >Bars</button>
-                <button onclick="setChartType('line')">Line</button>
-                <button onclick="setChartType('pie')">Pie</button>
+                <button onclick="setChartType('bar')" >Bar charts</button>
+                <button onclick="setChartType('line')">Line chart</button>
+                <button onclick="setChartType('pie')">Pie chart</button>
+                <h4 id="graphtitle">Forest Graphics Details </h4>
+
             </div>
-                <h4 style="position:center;">Forest Graphics Details 1</h4>
+            
+            <select id="graphcsAttr">
+                <option value="dog">Superficie des Forets (km²)</option>
+                <option value="dog">Especes des Forets (%)</option>
+              </select>
+            <button id="itemDetails" >See Details</button>
+                
             
             <canvas id="lineChart"></canvas>
         </div>
